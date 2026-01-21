@@ -38,14 +38,6 @@ export default async function CategoryPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b bg-card">
-        <div className="container mx-auto px-4 py-6">
-          <Link href="/" className="text-xl font-semibold text-foreground">
-            Auroville Problem-Solution Platform
-          </Link>
-        </div>
-      </header>
-
       <main className="container mx-auto px-4 py-10 space-y-8">
         <nav className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
           <Link href="/" className="hover:text-foreground">
@@ -62,6 +54,12 @@ export default async function CategoryPage({ params }: PageProps) {
           <div>
             <h1 className="text-2xl font-bold">{categoryTitle}</h1>
             <p className="text-muted-foreground">{itemCountLabel}</p>
+            <Link
+              href={itemType === "problem" ? "/problem/new" : "/solution/new"}
+              className="mt-4 inline-flex px-4 py-2 rounded-lg border border-transparent bg-muted text-foreground text-sm font-medium hover:bg-muted/80 transition-colors"
+            >
+              {itemType === "problem" ? "New Problem" : "New Solution"}
+            </Link>
           </div>
         </section>
 
