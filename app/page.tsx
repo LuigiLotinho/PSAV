@@ -1,14 +1,39 @@
 import Link from "next/link"
 import { ThreeDPhotoCarousel } from "@/components/ui/3d-carousel"
-import { categories, getTopItems } from "@/lib/mock-data"
+import { categories } from "@/lib/mock-data"
 
 export default function HomePage() {
-  const topSolutions = getTopItems("solution", 10)
-  const topProblems = getTopItems("problem", 10)
-  const categoryCards = categories.map((category) => ({
-    id: category.id,
+  const categoryImages: Record<string, string> = {
+    health: "/category-images/pexels-feyza-altun-120534393-13006757.jpg",
+    education: "/category-images/pexels-brett-sayles-30725518.jpg",
+    community: "/category-images/pexels-julia-volk-5769308.jpg",
+    environment: "/category-images/pexels-ilham-zovanka-2158121497-35383157.jpg",
+    agriculture: "/category-images/pexels-caio-mantovani-97605853-17905810.jpg",
+    "water-energy-and-resources": "/category-images/pexels-omar-eltahan-2157926445-35047961.jpg",
+    housing: "/category-images/pexels-beardedtexantravels-5034542.jpg",
+    infrastructure: "/category-images/pexels-yide-sun-84747826-19446467.jpg",
+    mobility: "/category-images/pexels-chatchai-kurmbabpar-2154039831-33085423.jpg",
+    technology: "/category-images/pexels-bing-kol-470434409-35232818.jpg",
+    economy: "/category-images/economy.jpg",
+    organization: "/category-images/pexels-imagevain-6622887.jpg",
+    governance: "/category-images/pexels-antonia-spantzel-774939153-18923572.jpg",
+  }
+  const fallbackImage = "/category-images/pexels-33205297-7042926.jpg"
+  const solutionCategoryCards = categories.map((category) => ({
+    id: `solution-${category.id}`,
     title: category.name,
     categoryName: category.name,
+    href: `/category/solutions/${category.slug}`,
+    imageSrc: categoryImages[category.slug] ?? fallbackImage,
+    imageAlt: `${category.name} category`,
+  }))
+  const problemCategoryCards = categories.map((category) => ({
+    id: `problem-${category.id}`,
+    title: category.name,
+    categoryName: category.name,
+    href: `/category/problems/${category.slug}`,
+    imageSrc: categoryImages[category.slug] ?? fallbackImage,
+    imageAlt: `${category.name} category`,
   }))
 
   return (
@@ -30,13 +55,13 @@ export default function HomePage() {
         </section>
 
         <section className="space-y-4 text-center">
-          <h2 className="text-2xl font-semibold">Solution Categories</h2>
-          <ThreeDPhotoCarousel items={categoryCards} />
+          <h2 className="text-3xl font-semibold">Solution Categories</h2>
+          <ThreeDPhotoCarousel items={solutionCategoryCards} />
         </section>
 
         <section className="space-y-4 text-center">
-          <h2 className="text-2xl font-semibold">Problem Categories</h2>
-          <ThreeDPhotoCarousel items={categoryCards} />
+          <h2 className="text-3xl font-semibold">Problem Categories</h2>
+          <ThreeDPhotoCarousel items={problemCategoryCards} />
         </section>
       </main>
     </div>

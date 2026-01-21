@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowUp, ChevronRight } from "lucide-react"
+import { ChevronRight, Plus } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { getCategoryBySlug, getItemsByCategory, type ItemType } from "@/lib/mock-data"
 
@@ -84,13 +84,13 @@ export default async function CategoryPage({ params }: PageProps) {
                 <div className="flex flex-col items-center gap-1 min-w-[60px]">
                   <button
                     type="button"
-                    className="p-2 rounded-lg hover:bg-muted"
+                    className="p-2 rounded-lg bg-sky-50 text-sky-500 hover:bg-sky-100"
                     aria-label="Upvote"
                   >
-                    <ArrowUp className="h-5 w-5 text-primary" />
+                    <Plus className="h-5 w-5" />
                   </button>
                   <span className="text-xl font-bold">{item.upvotes}</span>
-                  <span className="text-xs text-muted-foreground">votes</span>
+                  <span className="text-xs text-muted-foreground">upvotes</span>
                 </div>
 
                 <div className="flex-1">
