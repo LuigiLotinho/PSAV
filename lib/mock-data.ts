@@ -30,16 +30,19 @@ export type Item = {
 }
 
 const categoryNames = [
-  "Health & Wellbeing",
-  "Education & Knowledge",
-  "Community & Social Systems",
-  "Environment & Sustainability",
-  "Food & Agriculture",
+  "Health",
+  "Education",
+  "Community",
+  "Environment",
+  "Agriculture",
   "Water, Energy & Resources",
-  "Housing & Infrastructure",
-  "Mobility & Logistics",
-  "Digital Systems & Technology",
-  "Economy, Organization & Governance",
+  "Housing",
+  "Infrastructure",
+  "Mobility",
+  "Technology",
+  "Economy",
+  "Organization",
+  "Governance",
 ]
 
 export const categories: Category[] = categoryNames.map((name, index) => ({
