@@ -1,14 +1,19 @@
 import Link from "next/link"
 import { ThreeDPhotoCarousel } from "@/components/ui/3d-carousel"
-import { categories, getTopItems } from "@/lib/mock-data"
+import { categories } from "@/lib/mock-data"
 
 export default function HomePage() {
-  const topSolutions = getTopItems("solution", 10)
-  const topProblems = getTopItems("problem", 10)
-  const categoryCards = categories.map((category) => ({
-    id: category.id,
+  const solutionCategoryCards = categories.map((category) => ({
+    id: `solution-${category.id}`,
     title: category.name,
     categoryName: category.name,
+    href: `/category/solutions/${category.slug}`,
+  }))
+  const problemCategoryCards = categories.map((category) => ({
+    id: `problem-${category.id}`,
+    title: category.name,
+    categoryName: category.name,
+    href: `/category/problems/${category.slug}`,
   }))
 
   return (
@@ -31,12 +36,12 @@ export default function HomePage() {
 
         <section className="space-y-4 text-center">
           <h2 className="text-2xl font-semibold">Solution Categories</h2>
-          <ThreeDPhotoCarousel items={categoryCards} />
+          <ThreeDPhotoCarousel items={solutionCategoryCards} />
         </section>
 
         <section className="space-y-4 text-center">
           <h2 className="text-2xl font-semibold">Problem Categories</h2>
-          <ThreeDPhotoCarousel items={categoryCards} />
+          <ThreeDPhotoCarousel items={problemCategoryCards} />
         </section>
       </main>
     </div>
