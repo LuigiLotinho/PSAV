@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { useMemo, useRef } from "react"
 import { motion, useMotionValue } from "framer-motion"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 type CarouselItem = {
   id: string
@@ -23,11 +24,18 @@ type ThreeDPhotoCarouselProps = {
 
 export function ThreeDPhotoCarousel({
   items,
-  radius = 620,
-  cardWidth = 260,
-  cardHeight = 160,
+  radius: propRadius,
+  cardWidth: propCardWidth,
+  cardHeight: propCardHeight,
   className = "",
 }: ThreeDPhotoCarouselProps) {
+  const isMobile = useIsMobile()
+  
+  // Mobile adjustments
+  const radius = propRadius ?? (isMobile ? 300 : 620)
+  const cardWidth = propCardWidth ?? (isMobile ? 180 : 260)
+  const cardHeight = propCardHeight ?? (isMobile ? 110 : 160)
+  
   const pastelColors = [
     "#F8C8DC",
     "#CDE7FF",
@@ -57,7 +65,7 @@ export function ThreeDPhotoCarousel({
 
   return (
     <div className={className}>
-      <div className="relative mx-auto h-[520px] w-full [perspective:1400px]">
+      <div className={`relative mx-auto w-full [perspective:1400px] ${isMobile ? "h-[320px]" : "h-[520px]"}`}>
         <motion.div
           className="relative h-full w-full cursor-grab active:cursor-grabbing"
           style={{ rotateY: rotation, transformStyle: "preserve-3d", touchAction: "none" }}
@@ -76,8 +84,8 @@ export function ThreeDPhotoCarousel({
           {items.map((item, index) => {
             const hasImage = Boolean(item.imageSrc)
             const contentClass = hasImage
-              ? "text-base font-semibold uppercase tracking-wide text-white drop-shadow"
-              : "text-base font-semibold uppercase tracking-wide text-slate-900"
+              ? `font-semibold uppercase tracking-wide text-white drop-shadow ${isMobile ? "text-xs" : "text-base"}`
+              : `font-semibold uppercase tracking-wide text-slate-900 ${isMobile ? "text-xs" : "text-base"}`
             const content = item.categoryName ? (
               <span className={contentClass}>{item.categoryName}</span>
             ) : (
@@ -85,7 +93,7 @@ export function ThreeDPhotoCarousel({
             )
             const sharedProps = {
               className:
-                "absolute left-1/2 top-1/2 flex items-center justify-center rounded-xl p-4 text-center shadow-lg transition-shadow hover:shadow-xl overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary",
+                `absolute left-1/2 top-1/2 flex items-center justify-center rounded-xl text-center shadow-lg transition-shadow hover:shadow-xl overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary ${isMobile ? "p-2" : "p-4"}`,
               style: {
                 width: cardWidth,
                 height: cardHeight,
