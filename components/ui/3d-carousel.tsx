@@ -32,7 +32,7 @@ export function ThreeDPhotoCarousel({
   const isMobile = useIsMobile()
   
   // Mobile adjustments
-  const radius = propRadius ?? (isMobile ? 210 : 620)
+  const radius = propRadius ?? (isMobile ? 230 : 620)
   const cardWidth = propCardWidth ?? (isMobile ? 100 : 260)
   const cardHeight = propCardHeight ?? (isMobile ? 60 : 160)
   
@@ -65,7 +65,7 @@ export function ThreeDPhotoCarousel({
 
   return (
     <div className={className}>
-      <div className={`relative mx-auto w-full [perspective:1400px] ${isMobile ? "h-[240px]" : "h-[520px]"}`}>
+      <div className={`relative mx-auto w-full [perspective:1400px] ${isMobile ? "h-[160px]" : "h-[520px]"}`}>
         <motion.div
           className="relative h-full w-full cursor-grab active:cursor-grabbing"
           style={{ rotateY: rotation, transformStyle: "preserve-3d", touchAction: "none" }}
