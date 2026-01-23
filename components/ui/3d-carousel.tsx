@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { useMemo, useRef } from "react"
 import { motion, useMotionValue } from "framer-motion"
 import { useIsMobile } from "@/hooks/use-mobile"
@@ -33,9 +32,9 @@ export function ThreeDPhotoCarousel({
   const isMobile = useIsMobile()
   
   // Mobile adjustments
-  const radius = propRadius ?? (isMobile ? 220 : 620)
-  const cardWidth = propCardWidth ?? (isMobile ? 120 : 260)
-  const cardHeight = propCardHeight ?? (isMobile ? 70 : 160)
+  const radius = propRadius ?? (isMobile ? 180 : 620)
+  const cardWidth = propCardWidth ?? (isMobile ? 100 : 260)
+  const cardHeight = propCardHeight ?? (isMobile ? 60 : 160)
   
   const pastelColors = [
     "#F8C8DC",
@@ -66,7 +65,7 @@ export function ThreeDPhotoCarousel({
 
   return (
     <div className={className}>
-      <div className={`relative mx-auto w-full [perspective:1400px] ${isMobile ? "h-[260px]" : "h-[520px]"}`}>
+      <div className={`relative mx-auto w-full [perspective:1400px] ${isMobile ? "h-[220px]" : "h-[520px]"}`}>
         <motion.div
           className="relative h-full w-full cursor-grab active:cursor-grabbing"
           style={{ rotateY: rotation, transformStyle: "preserve-3d", touchAction: "none" }}
