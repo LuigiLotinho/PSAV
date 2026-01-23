@@ -4,21 +4,21 @@ import { categories } from "@/lib/mock-data"
 
 export default function HomePage() {
   const categoryImages: Record<string, string> = {
-    health: "/category-images/pexels-feyza-altun-120534393-13006757.webp",
-    education: "/category-images/pexels-brett-sayles-30725518.webp",
-    community: "/category-images/pexels-julia-volk-5769308.webp",
-    environment: "/category-images/pexels-ilham-zovanka-2158121497-35383157.webp",
-    agriculture: "/category-images/pexels-caio-mantovani-97605853-17905810.webp",
-    "water-energy-and-resources": "/category-images/pexels-omar-eltahan-2157926445-35047961.webp",
-    housing: "/category-images/pexels-beardedtexantravels-5034542.webp",
-    infrastructure: "/category-images/pexels-yide-sun-84747826-19446467.webp",
-    mobility: "/category-images/pexels-chatchai-kurmbabpar-2154039831-33085423.webp",
-    technology: "/category-images/pexels-bing-kol-470434409-35232818.webp",
-    economy: "/category-images/economy.webp",
-    organization: "/category-images/pexels-imagevain-6622887.webp",
-    governance: "/category-images/pexels-antonia-spantzel-774939153-18923572.webp",
+    health: "/category-images/pexels-feyza-altun-120534393-13006757.jpg",
+    education: "/category-images/pexels-brett-sayles-30725518.jpg",
+    community: "/category-images/pexels-julia-volk-5769308.jpg",
+    environment: "/category-images/pexels-ilham-zovanka-2158121497-35383157.jpg",
+    agriculture: "/category-images/pexels-caio-mantovani-97605853-17905810.jpg",
+    "water-energy-and-resources": "/category-images/pexels-omar-eltahan-2157926445-35047961.jpg",
+    housing: "/category-images/pexels-beardedtexantravels-5034542.jpg",
+    infrastructure: "/category-images/pexels-yide-sun-84747826-19446467.jpg",
+    mobility: "/category-images/pexels-chatchai-kurmbabpar-2154039831-33085423.jpg",
+    technology: "/category-images/pexels-bing-kol-470434409-35232818.jpg",
+    economy: "/category-images/economy.jpg",
+    organization: "/category-images/pexels-imagevain-6622887.jpg",
+    governance: "/category-images/pexels-antonia-spantzel-774939153-18923572.jpg",
   }
-  const fallbackImage = "/category-images/pexels-33205297-7042926.webp"
+  const fallbackImage = "/category-images/pexels-33205297-7042926.jpg"
 
   const solutionCategoryCards = categories.map((category) => ({
     id: `solution-${category.id}`,
