@@ -99,13 +99,13 @@ export function ThreeDPhotoCarousel({
                 height: cardHeight,
                 transform: `translate(-50%, -50%) rotateY(${index * step}deg) translateZ(${radius}px)`,
                 transformStyle: "preserve-3d" as const,
-                opacity: 0.8,
                 backgroundColor: hasImage ? undefined : pastelColors[index % pastelColors.length],
                 backgroundImage: hasImage
                   ? `linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url(${item.imageSrc})`
                   : undefined,
                 backgroundSize: hasImage ? "cover" : undefined,
                 backgroundPosition: hasImage ? "center" : undefined,
+                opacity: 0.6,
               },
             }
 
