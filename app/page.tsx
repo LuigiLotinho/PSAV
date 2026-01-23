@@ -19,6 +19,7 @@ export default function HomePage() {
     governance: "/category-images/pexels-antonia-spantzel-774939153-18923572.jpg",
   }
   const fallbackImage = "/category-images/pexels-33205297-7042926.jpg"
+
   const solutionCategoryCards = categories.map((category) => ({
     id: `solution-${category.id}`,
     title: category.name,

@@ -85,7 +85,7 @@ export function ThreeDPhotoCarousel({
             )
             const sharedProps = {
               className:
-                "absolute left-1/2 top-1/2 flex items-center justify-center rounded-xl p-4 text-center shadow-lg transition-shadow hover:shadow-xl overflow-hidden",
+                "absolute left-1/2 top-1/2 flex items-center justify-center rounded-xl p-4 text-center shadow-lg transition-shadow hover:shadow-xl overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary",
               style: {
                 width: cardWidth,
                 height: cardHeight,
