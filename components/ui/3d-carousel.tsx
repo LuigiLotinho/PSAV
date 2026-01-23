@@ -97,6 +97,7 @@ export function ThreeDPhotoCarousel({
               style: {
                 width: cardWidth,
                 height: cardHeight,
+                opacity: 0.8,
                 transform: `translate(-50%, -50%) rotateY(${index * step}deg) translateZ(${radius}px)`,
                 transformStyle: "preserve-3d" as const,
                 backgroundColor: hasImage ? undefined : pastelColors[index % pastelColors.length],
@@ -105,7 +106,6 @@ export function ThreeDPhotoCarousel({
                   : undefined,
                 backgroundSize: hasImage ? "cover" : undefined,
                 backgroundPosition: hasImage ? "center" : undefined,
-                opacity: 0.6,
               },
             }
 
