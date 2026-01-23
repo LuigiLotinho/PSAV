@@ -33,8 +33,8 @@ export function ThreeDPhotoCarousel({
   
   // Mobile adjustments
   const radius = propRadius ?? (isMobile ? 300 : 620)
-  const cardWidth = propCardWidth ?? (isMobile ? 180 : 260)
-  const cardHeight = propCardHeight ?? (isMobile ? 110 : 160)
+  const cardWidth = propCardWidth ?? (isMobile ? 140 : 260)
+  const cardHeight = propCardHeight ?? (isMobile ? 80 : 160)
   
   const pastelColors = [
     "#F8C8DC",
@@ -84,8 +84,8 @@ export function ThreeDPhotoCarousel({
           {items.map((item, index) => {
             const hasImage = Boolean(item.imageSrc)
             const contentClass = hasImage
-              ? `font-semibold uppercase tracking-wide text-white drop-shadow ${isMobile ? "text-xs" : "text-base"}`
-              : `font-semibold uppercase tracking-wide text-slate-900 ${isMobile ? "text-xs" : "text-base"}`
+              ? `font-semibold uppercase tracking-wide text-white drop-shadow ${isMobile ? "text-sm" : "text-base"}`
+              : `font-semibold uppercase tracking-wide text-slate-900 ${isMobile ? "text-sm" : "text-base"}`
             const content = item.categoryName ? (
               <span className={contentClass}>{item.categoryName}</span>
             ) : (
