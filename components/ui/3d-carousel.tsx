@@ -32,7 +32,7 @@ export function ThreeDPhotoCarousel({
   const isMobile = useIsMobile()
   
   // Mobile adjustments
-  const radius = propRadius ?? (isMobile ? 380 : 800)
+  const radius = propRadius ?? (isMobile ? 300 : 620)
   const cardWidth = propCardWidth ?? (isMobile ? 140 : 260)
   const cardHeight = propCardHeight ?? (isMobile ? 80 : 160)
   
@@ -99,6 +99,7 @@ export function ThreeDPhotoCarousel({
                 height: cardHeight,
                 transform: `translate(-50%, -50%) rotateY(${index * step}deg) translateZ(${radius}px)`,
                 transformStyle: "preserve-3d" as const,
+                opacity: 0.8,
                 backgroundColor: hasImage ? undefined : pastelColors[index % pastelColors.length],
                 backgroundImage: hasImage
                   ? `linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url(${item.imageSrc})`
