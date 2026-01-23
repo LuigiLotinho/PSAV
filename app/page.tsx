@@ -40,28 +40,28 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b bg-card">
-        <div className="container mx-auto px-4 py-6 text-center">
+        <div className="container mx-auto px-4 py-4 md:py-6 text-center">
           <Link href="/" className="text-xl font-semibold text-foreground">
             Auroville Problem-Solution Platform
           </Link>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-10 space-y-12">
-        <section className="space-y-3 text-center">
-          <h1 className="text-3xl font-bold text-foreground">Community Problems & Solutions</h1>
-          <p className="text-muted-foreground max-w-3xl mx-auto">
+      <main className="container mx-auto px-4 py-6 md:py-10 space-y-8 md:space-y-12">
+        <section className="space-y-2 md:space-y-3 text-center">
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground">Community Problems & Solutions</h1>
+          <p className="text-muted-foreground max-w-3xl mx-auto text-sm md:text-base">
             Browse the most upvoted solutions and problems across the community.
           </p>
         </section>
 
-        <section className="space-y-4 text-center">
-          <h2 className="text-3xl font-semibold">Solution Categories</h2>
+        <section className="space-y-2 md:space-y-4 text-center">
+          <h2 className="text-xl md:text-3xl font-semibold">Solution Categories</h2>
           <ThreeDPhotoCarousel items={solutionCategoryCards} />
         </section>
 
-        <section className="space-y-4 text-center">
-          <h2 className="text-3xl font-semibold">Problem Categories</h2>
+        <section className="space-y-2 md:space-y-4 text-center">
+          <h2 className="text-xl md:text-3xl font-semibold">Problem Categories</h2>
           <ThreeDPhotoCarousel items={problemCategoryCards} />
         </section>
       </main>
