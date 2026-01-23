@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { useMemo, useRef } from "react"
 import { motion, useMotionValue } from "framer-motion"
 import { useIsMobile } from "@/hooks/use-mobile"
@@ -100,13 +101,27 @@ export function ThreeDPhotoCarousel({
                 transform: `translate(-50%, -50%) rotateY(${index * step}deg) translateZ(${radius}px)`,
                 transformStyle: "preserve-3d" as const,
                 backgroundColor: hasImage ? undefined : pastelColors[index % pastelColors.length],
-                backgroundImage: hasImage
-                  ? `linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url(${item.imageSrc})`
-                  : undefined,
-                backgroundSize: hasImage ? "cover" : undefined,
-                backgroundPosition: hasImage ? "center" : undefined,
               },
             }
+
+            const cardContent = (
+              <>
+                {hasImage && (
+                  <div className="absolute inset-0 -z-10">
+                    <Image
+                      src={item.imageSrc!}
+                      alt={item.imageAlt || ""}
+                      fill
+                      sizes={`${cardWidth}px`}
+                      className="object-cover"
+                      priority={index < 4}
+                    />
+                    <div className="absolute inset-0 bg-black/35" />
+                  </div>
+                )}
+                {content}
+              </>
+            )
 
             if (item.href) {
               return (
@@ -128,14 +143,14 @@ export function ThreeDPhotoCarousel({
                     }
                   }}
                 >
-                  {content}
+                  {cardContent}
                 </Link>
               )
             }
 
             return (
               <div key={item.id} {...sharedProps}>
-                {content}
+                {cardContent}
               </div>
             )
           })}
