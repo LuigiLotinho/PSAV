@@ -32,7 +32,7 @@ export function ThreeDPhotoCarousel({
   const isMobile = useIsMobile()
   
   // Mobile adjustments
-  const radius = propRadius ?? (isMobile ? 300 : 620)
+  const radius = propRadius ?? (isMobile ? 380 : 800)
   const cardWidth = propCardWidth ?? (isMobile ? 140 : 260)
   const cardHeight = propCardHeight ?? (isMobile ? 80 : 160)
   
