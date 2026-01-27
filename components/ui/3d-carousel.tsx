@@ -33,9 +33,9 @@ export function ThreeDPhotoCarousel({
   const isMobile = useIsMobile()
   
   // Mobile adjustments
-  const radius = propRadius ?? (isMobile ? 230 : 620)
-  const cardWidth = propCardWidth ?? (isMobile ? 100 : 260)
-  const cardHeight = propCardHeight ?? (isMobile ? 60 : 160)
+  const radius = propRadius ?? (isMobile ? 300 : 620)
+  const cardWidth = propCardWidth ?? (isMobile ? 140 : 260)
+  const cardHeight = propCardHeight ?? (isMobile ? 140 : 160)
   
   const pastelColors = [
     "#F8C8DC",
@@ -66,7 +66,7 @@ export function ThreeDPhotoCarousel({
 
   return (
     <div className={className}>
-      <div className={`relative mx-auto w-full [perspective:1400px] ${isMobile ? "h-[160px]" : "h-[520px]"}`}>
+      <div className={`relative mx-auto w-full [perspective:1400px] ${isMobile ? "h-[300px]" : "h-[520px]"}`}>
         <motion.div
           className="relative h-full w-full cursor-grab active:cursor-grabbing"
           style={{ rotateY: rotation, transformStyle: "preserve-3d", touchAction: "none" }}
@@ -85,16 +85,20 @@ export function ThreeDPhotoCarousel({
           {items.map((item, index) => {
             const hasImage = Boolean(item.imageSrc)
             const contentClass = hasImage
-              ? `font-semibold uppercase tracking-wide text-white drop-shadow ${isMobile ? "text-sm" : "text-base"}`
-              : `font-semibold uppercase tracking-wide text-slate-900 ${isMobile ? "text-sm" : "text-base"}`
-            const content = item.categoryName ? (
-              <span className={contentClass}>{item.categoryName}</span>
-            ) : (
-              <span className={contentClass}>{item.title}</span>
+              ? `font-bold uppercase tracking-tight text-white drop-shadow-md text-center leading-tight ${isMobile ? "text-[12px]" : "text-base"}`
+              : `font-bold uppercase tracking-tight text-slate-900 text-center leading-tight ${isMobile ? "text-[12px]" : "text-base"}`
+            const content = (
+              <div className="z-10 flex h-full w-full items-center justify-center p-2">
+                {item.categoryName ? (
+                  <span className={contentClass}>{item.categoryName}</span>
+                ) : (
+                  <span className={contentClass}>{item.title}</span>
+                )}
+              </div>
             )
             const sharedProps = {
               className:
-                `absolute left-1/2 top-1/2 flex items-center justify-center rounded-xl text-center shadow-lg transition-shadow hover:shadow-xl overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary ${isMobile ? "p-2" : "p-4"}`,
+                `absolute left-1/2 top-1/2 flex items-center justify-center rounded-xl text-center shadow-lg transition-shadow hover:shadow-xl overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary [backface-visibility:hidden]`,
               style: {
                 width: cardWidth,
                 height: cardHeight,
@@ -107,7 +111,7 @@ export function ThreeDPhotoCarousel({
             const cardContent = (
               <>
                 {hasImage && (
-                  <div className="absolute inset-0 -z-10">
+                  <div className="absolute inset-0 z-0">
                     <Image
                       src={item.imageSrc!}
                       alt={item.imageAlt || ""}
@@ -116,7 +120,7 @@ export function ThreeDPhotoCarousel({
                       className="object-cover"
                       priority={index < 4}
                     />
-                    <div className="absolute inset-0 bg-black/35" />
+                    <div className="absolute inset-0 bg-black/40" />
                   </div>
                 )}
                 {content}
