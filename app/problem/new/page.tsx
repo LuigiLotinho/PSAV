@@ -5,6 +5,7 @@ import { useState } from "react"
 import { Breadcrumbs } from "@/components/site/breadcrumbs"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
@@ -31,6 +32,7 @@ const rankingConfig = [
 type RankingKey = (typeof rankingConfig)[number]["key"]
 
 export default function NewProblemPage() {
+  const [title, setTitle] = useState("")
   const [category, setCategory] = useState<string>("")
   const [shortText, setShortText] = useState("")
   const [longText, setLongText] = useState("")
@@ -76,6 +78,15 @@ export default function NewProblemPage() {
         </section>
 
         <form className="max-w-3xl space-y-8">
+          <div className="space-y-3">
+            <label className="text-sm font-medium">Title of the Problem *</label>
+            <Input
+              value={title}
+              onChange={(event) => setTitle(event.target.value)}
+              placeholder="e.g. Water shortage in center field"
+            />
+          </div>
+
           <div className="space-y-3">
             <label className="text-sm font-medium">Category *</label>
             <Select value={category} onValueChange={setCategory}>
