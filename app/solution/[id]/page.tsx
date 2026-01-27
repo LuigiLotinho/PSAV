@@ -5,6 +5,7 @@ import { Breadcrumbs } from "@/components/site/breadcrumbs"
 import { RankingGrid } from "@/components/site/ranking-grid"
 import { Badge } from "@/components/ui/badge"
 import prisma from "@/lib/prisma"
+import { UpvoteButton } from "@/components/site/upvote-button"
 
 type PageProps = {
   params: Promise<{
@@ -65,9 +66,12 @@ export default async function SolutionDetailPage({ params }: PageProps) {
               <h1 className="text-2xl font-bold text-foreground">{item.title}</h1>
             </div>
             <div className="flex flex-col items-center gap-1 rounded-xl bg-muted/50 p-4">
-              <button type="button" className="rounded-lg p-2 hover:bg-background" aria-label="Upvote">
-                <ArrowUp className="h-6 w-6 text-primary" />
-              </button>
+              <UpvoteButton
+                type="solution"
+                id={item.id}
+                className="rounded-lg p-2 hover:bg-background"
+                iconClassName="h-6 w-6 text-primary"
+              />
               <span className="text-2xl font-bold">{item.upvotes}</span>
               <span className="text-xs text-muted-foreground">votes</span>
             </div>

@@ -1,13 +1,18 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ChevronRight, Plus } from "lucide-react"
+import { ChevronRight } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import prisma from "@/lib/prisma"
+import { UpvoteButton } from "@/components/site/upvote-button"
 
 type PageProps = {
   params: Promise<{
     type: string
     slug: string
+  }>
+  searchParams?: Promise<{
+    sort?: string
+    q?: string
   }>
 }
 
@@ -19,8 +24,9 @@ function mapType(type: string): ItemType | null {
   return null
 }
 
-export default async function CategoryPage({ params }: PageProps) {
+export default async function CategoryPage({ params, searchParams }: PageProps) {
   const { type, slug } = await params
+  const resolvedSearchParams = searchParams ? await searchParams : undefined
   const itemType = mapType(type)
   const category = await prisma.category.findUnique({
     where: { slug },
@@ -30,15 +36,36 @@ export default async function CategoryPage({ params }: PageProps) {
     notFound()
   }
 
+  const sort = resolvedSearchParams?.sort ?? "most-voted"
+  const query = resolvedSearchParams?.q?.trim()
+  const orderBy =
+    sort === "newest"
+      ? { createdAt: "desc" }
+      : sort === "most-urgent"
+        ? { urgency: "desc" }
+        : { upvotes: "desc" }
+
+  const whereBase = {
+    categorySlug: category.slug,
+    ...(query
+      ? {
+          OR: [
+            { title: { contains: query, mode: "insensitive" } },
+            { short_text: { contains: query, mode: "insensitive" } },
+          ],
+        }
+      : {}),
+  }
+
   const items =
     itemType === "problem"
       ? await prisma.problem.findMany({
-          where: { categorySlug: category.slug },
-          orderBy: { upvotes: "desc" },
+          where: whereBase,
+          orderBy,
         })
       : await prisma.solution.findMany({
-          where: { categorySlug: category.slug },
-          orderBy: { upvotes: "desc" },
+          where: whereBase,
+          orderBy,
         })
   const title = itemType === "problem" ? "Problems" : "Solutions"
   const categoryTitle = `${category.name} ${title}`
@@ -79,11 +106,47 @@ export default async function CategoryPage({ params }: PageProps) {
         <section className="flex items-center justify-between flex-wrap gap-3 border-b pb-4">
           <div className="flex items-center gap-3 text-sm">
             <span className="font-medium text-foreground">Sort by:</span>
-            <button className="px-3 py-1 rounded bg-primary text-primary-foreground text-sm">Most Voted</button>
-            <button className="px-3 py-1 rounded border text-sm">Newest</button>
-            <button className="px-3 py-1 rounded border text-sm">Most Urgent</button>
+            <Link
+              href={`/category/${type}/${slug}?sort=most-voted${query ? `&q=${encodeURIComponent(query)}` : ""}`}
+              className={`px-3 py-1 rounded text-sm ${sort === "most-voted" ? "bg-primary text-primary-foreground" : "border"}`}
+            >
+              Most Voted
+            </Link>
+            <Link
+              href={`/category/${type}/${slug}?sort=newest${query ? `&q=${encodeURIComponent(query)}` : ""}`}
+              className={`px-3 py-1 rounded text-sm ${sort === "newest" ? "bg-primary text-primary-foreground" : "border"}`}
+            >
+              Newest
+            </Link>
+            <Link
+              href={`/category/${type}/${slug}?sort=most-urgent${query ? `&q=${encodeURIComponent(query)}` : ""}`}
+              className={`px-3 py-1 rounded text-sm ${sort === "most-urgent" ? "bg-primary text-primary-foreground" : "border"}`}
+            >
+              Most Urgent
+            </Link>
           </div>
           <span className="text-sm text-muted-foreground">Showing {items.length} items</span>
+        </section>
+        <section className="flex items-center justify-between flex-wrap gap-3">
+          <form method="get" className="flex w-full max-w-md items-center gap-2">
+            <input
+              type="text"
+              name="q"
+              defaultValue={query}
+              placeholder={`Search ${title.toLowerCase()}...`}
+              className="w-full rounded-md border bg-background px-3 py-2 text-sm"
+            />
+            <input type="hidden" name="sort" value={sort} />
+            <button className="px-3 py-2 rounded border text-sm">Search</button>
+          </form>
+          {query ? (
+            <Link
+              href={`/category/${type}/${slug}?sort=${sort}`}
+              className="text-sm text-muted-foreground hover:text-foreground"
+            >
+              Clear search
+            </Link>
+          ) : null}
         </section>
 
         <section className="space-y-4">
@@ -95,13 +158,12 @@ export default async function CategoryPage({ params }: PageProps) {
             >
               <div className="flex items-start gap-4">
                 <div className="flex flex-col items-center gap-1 min-w-[60px]">
-                  <button
-                    type="button"
-                    className="p-2 rounded-lg bg-sky-50 text-sky-500 hover:bg-sky-100"
-                    aria-label="Upvote"
-                  >
-                    <Plus className="h-5 w-5" />
-                  </button>
+                  <UpvoteButton
+                    type={itemType}
+                    id={item.id}
+                    className="rounded-lg bg-sky-50 text-sky-500 hover:bg-sky-100"
+                    iconClassName="h-5 w-5 text-sky-500"
+                  />
                   <span className="text-xl font-bold">{item.upvotes}</span>
                   <span className="text-xs text-muted-foreground">upvotes</span>
                 </div>
