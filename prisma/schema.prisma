@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Category {
+  id        String     @id @default(cuid())
+  name      String
+  slug      String     @unique
+  problems  Problem[]
+  solutions Solution[]
+}
+
+model Problem {
+  id           String     @id @default(cuid())
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  title        String
+  short_text   String     @db.Text
+  long_text    String?    @db.Text
+  category     Category   @relation(fields: [categoryId], references: [id])
+  categoryId   String
+  categoryName String
+  categorySlug String
+  upvotes      Int        @default(0)
+  
+  // Rankings
+  impact       Int        @default(5)
+  urgency      Int        @default(5)
+  feasibility  Int        @default(5)
+  affected     Int        @default(5)
+  costs        Int        @default(5)
+
+  solutions    Solution[] @relation("ProblemToSolution")
+}
+
+model Solution {
+  id           String     @id @default(cuid())
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  title        String
+  short_text   String     @db.Text
+  long_text    String?    @db.Text
+  category     Category   @relation(fields: [categoryId], references: [id])
+  categoryId   String
+  categoryName String
+  categorySlug String
+  upvotes      Int        @default(0)
+
+  // Rankings
+  impact       Int        @default(5)
+  urgency      Int        @default(5)
+  feasibility  Int        @default(5)
+  affected     Int        @default(5)
+  costs        Int        @default(5)
+
+  problems     Problem[]  @relation("ProblemToSolution")
+}

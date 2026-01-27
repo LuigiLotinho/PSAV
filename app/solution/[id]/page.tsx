@@ -4,7 +4,7 @@ import { ArrowUp, ChevronRight, Link2 } from "lucide-react"
 import { Breadcrumbs } from "@/components/site/breadcrumbs"
 import { RankingGrid } from "@/components/site/ranking-grid"
 import { Badge } from "@/components/ui/badge"
-import { getItemById, getItemsByCategory } from "@/lib/mock-data"
+import prisma from "@/lib/prisma"
 
 type PageProps = {
   params: Promise<{
@@ -14,13 +14,26 @@ type PageProps = {
 
 export default async function SolutionDetailPage({ params }: PageProps) {
   const { id } = await params
-  const item = getItemById("solution", id)
+  const item = await prisma.solution.findUnique({
+    where: { id },
+  })
 
   if (!item) {
     notFound()
   }
 
-  const linkedProblems = getItemsByCategory("problem", item.categorySlug).slice(0, 2)
+  const linkedProblems = await prisma.problem.findMany({
+    where: { categorySlug: item.categorySlug },
+    orderBy: { upvotes: "desc" },
+    take: 2,
+  })
+  const rankings = {
+    impact: item.impact,
+    urgency: item.urgency,
+    feasibility: item.feasibility,
+    affected: item.affected,
+    costs: item.costs,
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -71,7 +84,7 @@ export default async function SolutionDetailPage({ params }: PageProps) {
 
           <section className="space-y-4">
             <h2 className="text-lg font-semibold">Rankings (1–10)</h2>
-            <RankingGrid rankings={item.rankings} />
+            <RankingGrid rankings={rankings} />
           </section>
 
           <section className="space-y-4">

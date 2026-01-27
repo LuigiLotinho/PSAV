@@ -2,7 +2,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ChevronRight, Plus } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
-import { getCategoryBySlug, getItemsByCategory, type ItemType } from "@/lib/mock-data"
+import prisma from "@/lib/prisma"
 
 type PageProps = {
   params: Promise<{
@@ -10,6 +10,8 @@ type PageProps = {
     slug: string
   }>
 }
+
+type ItemType = "problem" | "solution"
 
 function mapType(type: string): ItemType | null {
   if (type === "problems") return "problem"
@@ -20,13 +22,24 @@ function mapType(type: string): ItemType | null {
 export default async function CategoryPage({ params }: PageProps) {
   const { type, slug } = await params
   const itemType = mapType(type)
-  const category = getCategoryBySlug(slug)
+  const category = await prisma.category.findUnique({
+    where: { slug },
+  })
 
   if (!itemType || !category) {
     notFound()
   }
 
-  const items = getItemsByCategory(itemType, category.slug)
+  const items =
+    itemType === "problem"
+      ? await prisma.problem.findMany({
+          where: { categorySlug: category.slug },
+          orderBy: { upvotes: "desc" },
+        })
+      : await prisma.solution.findMany({
+          where: { categorySlug: category.slug },
+          orderBy: { upvotes: "desc" },
+        })
   const title = itemType === "problem" ? "Problems" : "Solutions"
   const categoryTitle = `${category.name} ${title}`
   const itemCountLabel = `${items.length} ${title.toLowerCase()} in this category`

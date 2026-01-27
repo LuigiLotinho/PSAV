@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Breadcrumbs } from "@/components/site/breadcrumbs"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -16,7 +16,8 @@ import {
 } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
 import { Textarea } from "@/components/ui/textarea"
-import { categories } from "@/lib/mock-data"
+import { createProblem } from "@/app/actions/problem-actions"
+import { toast } from "sonner"
 
 const SHORT_MAX = 300
 const LONG_MAX = 2500
@@ -31,9 +32,17 @@ const rankingConfig = [
 
 type RankingKey = (typeof rankingConfig)[number]["key"]
 
+type Category = {
+  id: string
+  name: string
+  slug: string
+}
+
 export default function NewProblemPage() {
   const [title, setTitle] = useState("")
   const [category, setCategory] = useState<string>("")
+  const [categories, setCategories] = useState<Category[]>([])
+  const [isLoadingCategories, setIsLoadingCategories] = useState(true)
   const [shortText, setShortText] = useState("")
   const [longText, setLongText] = useState("")
   const [rankings, setRankings] = useState<Record<RankingKey, number>>({
@@ -43,9 +52,54 @@ export default function NewProblemPage() {
     affected: 5,
     costs: 5,
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   function updateRanking(key: RankingKey, value: number) {
     setRankings((prev) => ({ ...prev, [key]: value }))
+  }
+
+  useEffect(() => {
+    let isMounted = true
+    fetch("/api/categories")
+      .then((res) => res.json())
+      .then((data: Category[]) => {
+        if (isMounted) setCategories(data)
+      })
+      .catch(() => {
+        toast.error("Kategorien konnten nicht geladen werden.")
+      })
+      .finally(() => {
+        if (isMounted) setIsLoadingCategories(false)
+      })
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    
+    if (!title.trim() || !category || !shortText.trim()) {
+      toast.error("Bitte Titel, Kategorie und Kurzbeschreibung ausfüllen.")
+      return
+    }
+
+    setIsSubmitting(true)
+    try {
+      await createProblem({
+        title,
+        shortText,
+        longText,
+        categorySlug: category,
+        rankings
+      })
+      toast.success("Problem erfolgreich erstellt!")
+    } catch (error) {
+      console.error(error)
+      toast.error("Fehler beim Erstellen des Problems.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -77,21 +131,28 @@ export default function NewProblemPage() {
           <Badge variant="secondary">Contributor Only</Badge>
         </section>
 
-        <form className="max-w-3xl space-y-8">
+        <form onSubmit={handleSubmit} className="max-w-3xl space-y-8">
           <div className="space-y-3">
             <label className="text-sm font-medium">Title of the Problem *</label>
             <Input
               value={title}
               onChange={(event) => setTitle(event.target.value)}
               placeholder="e.g. Water shortage in center field"
+              disabled={isSubmitting}
             />
           </div>
 
           <div className="space-y-3">
             <label className="text-sm font-medium">Category *</label>
-            <Select value={category} onValueChange={setCategory}>
+            <Select
+              value={category}
+              onValueChange={setCategory}
+              disabled={isSubmitting || isLoadingCategories}
+            >
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select a category" />
+                <SelectValue
+                  placeholder={isLoadingCategories ? "Loading categories..." : "Select a category"}
+                />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -128,6 +189,7 @@ export default function NewProblemPage() {
               placeholder="Brief teaser in 2–3 sentences..."
               maxLength={SHORT_MAX}
               className="min-h-24"
+              disabled={isSubmitting}
             />
           </div>
 
@@ -154,6 +216,7 @@ export default function NewProblemPage() {
               placeholder="Full explanation of the problem..."
               maxLength={LONG_MAX}
               className="min-h-40"
+              disabled={isSubmitting}
             />
           </div>
 
@@ -181,14 +244,15 @@ export default function NewProblemPage() {
                     step={1}
                     value={[rankings[item.key]]}
                     onValueChange={(value) => updateRanking(item.key, value[0] ?? 1)}
+                    disabled={isSubmitting}
                   />
                 </div>
               ))}
             </div>
           </div>
 
-          <Button type="button" className="w-full">
-            Submit Problem
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
+            {isSubmitting ? "Submitting..." : "Submit Problem"}
           </Button>
         </form>
       </main>

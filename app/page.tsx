@@ -1,8 +1,8 @@
 import Link from "next/link"
 import { ThreeDPhotoCarousel } from "@/components/ui/3d-carousel"
-import { categories } from "@/lib/mock-data"
+import prisma from "@/lib/prisma"
 
-export default function HomePage() {
+export default async function HomePage() {
   const categoryImages: Record<string, string> = {
     health: "/category-images/pexels-feyza-altun-120534393-13006757.jpg",
     education: "/category-images/pexels-brett-sayles-30725518.jpg",
@@ -19,6 +19,10 @@ export default function HomePage() {
     governance: "/category-images/pexels-antonia-spantzel-774939153-18923572.jpg",
   }
   const fallbackImage = "/category-images/pexels-33205297-7042926.jpg"
+
+  const categories = await prisma.category.findMany({
+    orderBy: { name: "asc" },
+  })
 
   const solutionCategoryCards = categories.map((category) => ({
     id: `solution-${category.id}`,
