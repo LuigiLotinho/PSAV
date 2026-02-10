@@ -4,202 +4,94 @@ const { PrismaClient } = require("@prisma/client")
 const prisma = new PrismaClient()
 
 const categoryNames = [
-  "Health",
-  "Education",
-  "Community",
-  "Environment",
-  "Agriculture",
-  "Water, Energy & Resources",
-  "Housing",
   "Infrastructure",
-  "Mobility",
-  "Technology",
-  "Economy",
-  "Organization",
+  "Justice",
+  "Health",
+  "Media",
+  "Relations",
+  "Science",
+  "Spirituality",
+  "Arts",
+  "Economics (Units)",
+  "Economics (Individual)",
+  "Economics (Overall)",
+  "Educations",
+  "Environment",
   "Governance",
+  "Housing",
+  "Other",
 ]
 
-const categories = categoryNames.map((name, index) => ({
-  id: `cat-${index + 1}`,
-  name,
-  slug: name
+function slugify(value: string): string {
+  return value
     .toLowerCase()
-    .replace(/,?\s+&\s+/g, "-")
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
     .replace(/\s+/g, "-")
-    .replace(/,/g, ""),
-}))
-
-const problemTitleSeeds = [
-  "Service gaps",
-  "Capacity constraints",
-  "Process delays",
-  "Maintenance backlog",
-  "Access inequality",
-  "Quality inconsistencies",
-  "Coordination friction",
-  "Resource shortages",
-  "Information silos",
-  "Reliability concerns",
-]
-
-const solutionTitleSeeds = [
-  "Community-led initiative",
-  "Shared resource model",
-  "Preventive maintenance plan",
-  "Training and skills program",
-  "Transparency dashboard",
-  "Process simplification",
-  "Collaborative working group",
-  "Local sourcing strategy",
-  "Digital automation",
-  "Feedback and improvement loop",
-]
-
-function makeRankings(seed: number) {
-  const base = seed % 10
-  return {
-    impact: ((base + 2) % 10) + 1,
-    urgency: ((base + 4) % 10) + 1,
-    feasibility: ((base + 6) % 10) + 1,
-    affected: ((base + 8) % 10) + 1,
-    costs: ((base + 1) % 10) + 1,
-  }
+    .replace(/-+/g, "-")
 }
 
-function makeShortText(type: "problem" | "solution", category: string, index: number) {
-  if (type === "problem") {
-    return `A recurring ${category.toLowerCase()} issue that needs attention. Item ${index + 1} highlights a specific gap and its impact on daily life.`
-  }
-  return `A focused ${category.toLowerCase()} solution that can be piloted quickly. Item ${index + 1} outlines practical steps and expected benefits.`
+// 16 different images from public/category-images/
+const slugToImage: Record<string, string> = {
+  infrastructure: "/category-images/pexels-yide-sun-84747826-19446467.jpg",
+  justice: "/category-images/pexels-antonia-spantzel-774939153-18923572.jpg",
+  health: "/category-images/pexels-feyza-altun-120534393-13006757.jpg",
+  media: "/category-images/pexels-bing-kol-470434409-35232818.jpg",
+  relations: "/category-images/pexels-julia-volk-5769308.jpg",
+  science: "/category-images/pexels-danieljschwarz-34770958.jpg",
+  spirituality: "/category-images/pexels-tamara-elnova-218645958-12236732.jpg",
+  arts: "/category-images/pexels-jean-pixels-427051121-35405252.jpg",
+  "economics-units": "/category-images/economy.jpg",
+  "economics-individual": "/category-images/pexels-caio-mantovani-97605853-17905810.jpg",
+  "economics-overall": "/category-images/pexels-omar-eltahan-2157926445-35047961.jpg",
+  educations: "/category-images/pexels-brett-sayles-30725518.jpg",
+  environment: "/category-images/pexels-ilham-zovanka-2158121497-35383157.jpg",
+  governance: "/category-images/pexels-chatchai-kurmbabpar-2154039831-33085423.jpg",
+  housing: "/category-images/pexels-beardedtexantravels-5034542.jpg",
+  other: "/category-images/pexels-imagevain-6622887.jpg",
 }
 
-function makeLongText(type: "problem" | "solution", category: string, index: number) {
-  if (type === "problem") {
-    return `This problem describes a recurring challenge in ${category.toLowerCase()} with clear consequences for residents and stakeholders. Item ${index + 1} documents context, symptoms, and why the situation persists. The intent is to provide enough detail for readers to understand the scope and consider viable responses.`
-  }
-  return `This solution focuses on improving ${category.toLowerCase()} outcomes through a concrete, achievable approach. Item ${index + 1} details the steps, resources, and coordination needed to deliver measurable progress. The intent is to keep the plan realistic while enabling collaboration.`
+// Matching website URL per category (can be edited later)
+const slugToWebsiteUrl: Record<string, string> = {
+  infrastructure: "https://en.wikipedia.org/wiki/Infrastructure",
+  justice: "https://en.wikipedia.org/wiki/Justice",
+  health: "https://www.who.int",
+  media: "https://en.wikipedia.org/wiki/Media_(communication)",
+  relations: "https://en.wikipedia.org/wiki/Interpersonal_relationship",
+  science: "https://en.wikipedia.org/wiki/Science",
+  spirituality: "https://en.wikipedia.org/wiki/Spirituality",
+  arts: "https://en.wikipedia.org/wiki/Arts",
+  "economics-units": "https://en.wikipedia.org/wiki/Microeconomics",
+  "economics-individual": "https://en.wikipedia.org/wiki/Behavioral_economics",
+  "economics-overall": "https://en.wikipedia.org/wiki/Macroeconomics",
+  educations: "https://en.wikipedia.org/wiki/Education",
+  environment: "https://en.wikipedia.org/wiki/Environment_(biophysical)",
+  governance: "https://en.wikipedia.org/wiki/Governance",
+  housing: "https://en.wikipedia.org/wiki/Housing",
+  other: "https://en.wikipedia.org/wiki/Main_Page",
 }
-
-type ItemSeed = {
-  id: string
-  title: string
-  short_text: string
-  long_text: string
-  categorySlug: string
-  categoryName: string
-  upvotes: number
-  rankings: {
-    impact: number
-    urgency: number
-    feasibility: number
-    affected: number
-    costs: number
-  }
-}
-
-function buildItems(type: "problem" | "solution") {
-  const items: ItemSeed[] = []
-  const titleSeeds = type === "problem" ? problemTitleSeeds : solutionTitleSeeds
-  const baseUpvotes = type === "solution" ? 240 : 200
-
-  categories.forEach((category, categoryIndex) => {
-    for (let i = 0; i < 10; i += 1) {
-      const seed = categoryIndex * 10 + i
-      const titleSeed = titleSeeds[i % titleSeeds.length]
-      const title =
-        type === "problem"
-          ? `${titleSeed} in ${category.name}`
-          : `${titleSeed} for ${category.name}`
-
-      items.push({
-        id: `${type}-${category.slug}-${i + 1}`,
-        title,
-        short_text: makeShortText(type, category.name, i),
-        long_text: makeLongText(type, category.name, i),
-        categorySlug: category.slug,
-        categoryName: category.name,
-        upvotes: Math.max(5, baseUpvotes - seed * 2),
-        rankings: makeRankings(seed + (type === "solution" ? 3 : 0)),
-      })
-    }
-  })
-
-  return items
-}
-
-const problems = buildItems("problem")
-const solutions = buildItems("solution")
 
 async function main() {
-  await prisma.category.createMany({
-    data: categories.map((category) => ({
-      name: category.name,
-      slug: category.slug,
-    })),
-    skipDuplicates: true,
-  })
-
-  const savedCategories = await prisma.category.findMany()
-  const categoryMap = new Map<string, { id: string; name: string; slug: string }>()
-  savedCategories.forEach((category: { id: string; name: string; slug: string }) => {
-    categoryMap.set(category.slug, { id: category.id, name: category.name, slug: category.slug })
-  })
-
-  const problemData = problems
-    .map((problem) => {
-      const category = categoryMap.get(problem.categorySlug)
-      if (!category) return null
-      return {
-        id: problem.id,
-        title: problem.title,
-        short_text: problem.short_text,
-        long_text: problem.long_text,
-        categoryId: category.id,
-        categoryName: category.name,
-        categorySlug: category.slug,
-        upvotes: problem.upvotes,
-        impact: problem.rankings.impact,
-        urgency: problem.rankings.urgency,
-        feasibility: problem.rankings.feasibility,
-        affected: problem.rankings.affected,
-        costs: problem.rankings.costs,
-      }
+  for (const name of categoryNames) {
+    const slug = slugify(name)
+    await prisma.category.upsert({
+      where: { slug },
+      create: {
+        name,
+        slug,
+        image: slugToImage[slug] ?? null,
+        websiteUrl: slugToWebsiteUrl[slug] ?? null,
+      },
+      update: {
+        name,
+        image: slugToImage[slug] ?? null,
+        websiteUrl: slugToWebsiteUrl[slug] ?? null,
+      },
     })
-    .filter(Boolean)
+  }
 
-  const solutionData = solutions
-    .map((solution) => {
-      const category = categoryMap.get(solution.categorySlug)
-      if (!category) return null
-      return {
-        id: solution.id,
-        title: solution.title,
-        short_text: solution.short_text,
-        long_text: solution.long_text,
-        categoryId: category.id,
-        categoryName: category.name,
-        categorySlug: category.slug,
-        upvotes: solution.upvotes,
-        impact: solution.rankings.impact,
-        urgency: solution.rankings.urgency,
-        feasibility: solution.rankings.feasibility,
-        affected: solution.rankings.affected,
-        costs: solution.rankings.costs,
-      }
-    })
-    .filter(Boolean)
-
-  await prisma.problem.createMany({
-    data: problemData,
-    skipDuplicates: true,
-  })
-
-  await prisma.solution.createMany({
-    data: solutionData,
-    skipDuplicates: true,
-  })
-
-  console.log("Categories, problems, and solutions seeded!")
+  console.log(`Seeded ${categoryNames.length} categories (each with its own image, no problems or solutions).`)
 }
 
 main()

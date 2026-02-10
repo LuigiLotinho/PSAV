@@ -33,7 +33,7 @@ export function ThreeDPhotoCarousel({
   const isMobile = useIsMobile()
   
   // Mobile adjustments
-  const radius = propRadius ?? (isMobile ? 300 : 620)
+  const radius = propRadius ?? (isMobile ? 360 : 720)
   const cardWidth = propCardWidth ?? (isMobile ? 140 : 260)
   const cardHeight = propCardHeight ?? (isMobile ? 140 : 160)
   
@@ -53,8 +53,9 @@ export function ThreeDPhotoCarousel({
     "#F7D6E0",
   ]
   const rotation = useMotionValue(0)
-  const draggedRef = useRef(false)
+  const didDragRef = useRef(false)
   const step = useMemo(() => (items.length ? 360 / items.length : 0), [items.length])
+  const DRAG_THRESHOLD_PX = 12
 
   if (items.length === 0) {
     return (
@@ -71,15 +72,18 @@ export function ThreeDPhotoCarousel({
           className="relative h-full w-full cursor-grab active:cursor-grabbing"
           style={{ rotateY: rotation, transformStyle: "preserve-3d", touchAction: "none" }}
           onPan={(_, info) => {
+            if (!didDragRef.current && Math.abs(info.offset.x) > DRAG_THRESHOLD_PX) {
+              didDragRef.current = true
+            }
             rotation.set(rotation.get() + info.delta.x * 0.4)
           }}
           onPanStart={() => {
-            draggedRef.current = true
+            didDragRef.current = false
           }}
           onPanEnd={() => {
             setTimeout(() => {
-              draggedRef.current = false
-            }, 0)
+              didDragRef.current = false
+            }, 150)
           }}
         >
           {items.map((item, index) => {
@@ -134,14 +138,12 @@ export function ThreeDPhotoCarousel({
                   href={item.href}
                   {...sharedProps}
                   draggable={false}
+                  onPointerDown={(e) => e.stopPropagation()}
                   onDragStart={(event) => {
                     event.preventDefault()
                   }}
-                  onPointerDown={() => {
-                    draggedRef.current = false
-                  }}
                   onClick={(event) => {
-                    if (draggedRef.current) {
+                    if (didDragRef.current) {
                       event.preventDefault()
                       event.stopPropagation()
                     }

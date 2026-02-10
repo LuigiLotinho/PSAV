@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ChevronRight } from "lucide-react"
+import { ChevronRight, ExternalLink } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import prisma from "@/lib/prisma"
 import { UpvoteButton } from "@/components/site/upvote-button"
@@ -45,7 +45,19 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
         ? { urgency: "desc" }
         : { upvotes: "desc" }
 
-  const whereBase = {
+  const whereBaseProblem = {
+    categorySlug: category.slug,
+    ...(query
+      ? {
+          OR: [
+            { title: { contains: query, mode: "insensitive" } },
+            { short_text: { contains: query, mode: "insensitive" } },
+          ],
+        }
+      : {}),
+  }
+
+  const whereBaseSolution = {
     categorySlug: category.slug,
     ...(query
       ? {
@@ -60,11 +72,11 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
   const items =
     itemType === "problem"
       ? await prisma.problem.findMany({
-          where: whereBase,
+          where: whereBaseProblem,
           orderBy,
         })
       : await prisma.solution.findMany({
-          where: whereBase,
+          where: whereBaseSolution,
           orderBy,
         })
   const title = itemType === "problem" ? "Problems" : "Solutions"
@@ -94,12 +106,25 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
           <div>
             <h1 className="text-2xl font-bold">{categoryTitle}</h1>
             <p className="text-muted-foreground">{itemCountLabel}</p>
-            <Link
-              href={itemType === "problem" ? "/problem/new" : "/solution/new"}
-              className="mt-4 inline-flex px-4 py-2 rounded-lg border border-transparent bg-muted text-foreground text-sm font-medium hover:bg-muted/80 transition-colors"
-            >
-              {itemType === "problem" ? "New Problem" : "New Solution"}
-            </Link>
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+              <Link
+                href={itemType === "problem" ? "/problem/new" : "/solution/new"}
+                className="inline-flex px-4 py-2 rounded-lg border border-transparent bg-muted text-foreground text-sm font-medium hover:bg-muted/80 transition-colors"
+              >
+                {itemType === "problem" ? "New Problem" : "New Solution"}
+              </Link>
+              {category.websiteUrl ? (
+                <a
+                  href={category.websiteUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-input bg-background text-foreground text-sm font-medium hover:bg-muted/80 transition-colors"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  More about {category.name}
+                </a>
+              ) : null}
+            </div>
           </div>
         </section>
 

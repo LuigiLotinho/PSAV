@@ -1,15 +1,17 @@
 # Kategorien
 
-1. Health
-2. Education
-3. Community
-4. Environment
-5. Agriculture
-6. Water, Energy & Resources
-7. Housing
-8. Infrastructure
-9. Mobility
-10. Technology
-11. Economy
-12. Organization
-13. Governance
+1. Infrastructure
+2. Justice
+3. Health
+4. Media
+5. Relations
+6. Science
+7. Spirituality
+8. Arts
+9. Economics (Units)
+10. Economics (Individual)
+11. Economics (Overall)
+12. Educations
+13. Environment
+14. Governance
+15. Housing

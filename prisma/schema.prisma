@@ -3,17 +3,19 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
 model Category {
-  id        String     @id @default(cuid())
-  name      String
-  slug      String     @unique
-  problems  Problem[]
-  solutions Solution[]
+  id          String     @id @default(cuid())
+  name        String
+  slug        String     @unique
+  image       String?
+  websiteUrl  String?
+  problems    Problem[]
+  solutions   Solution[]
 }
 
 model Problem {
@@ -28,7 +30,7 @@ model Problem {
   categoryName String
   categorySlug String
   upvotes      Int        @default(0)
-  
+
   // Rankings
   impact       Int        @default(5)
   urgency      Int        @default(5)

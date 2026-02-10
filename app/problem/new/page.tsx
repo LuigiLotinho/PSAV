@@ -78,7 +78,7 @@ export default function NewProblemPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    
+
     if (!title.trim() || !category || !shortText.trim()) {
       toast.error("Bitte Titel, Kategorie und Kurzbeschreibung ausfüllen.")
       return

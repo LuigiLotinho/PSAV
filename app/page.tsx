@@ -2,24 +2,35 @@ import Link from "next/link"
 import { ThreeDPhotoCarousel } from "@/components/ui/3d-carousel"
 import prisma from "@/lib/prisma"
 
-export default async function HomePage() {
-  const categoryImages: Record<string, string> = {
-    health: "/category-images/pexels-feyza-altun-120534393-13006757.jpg",
-    education: "/category-images/pexels-brett-sayles-30725518.jpg",
-    community: "/category-images/pexels-julia-volk-5769308.jpg",
-    environment: "/category-images/pexels-ilham-zovanka-2158121497-35383157.jpg",
-    agriculture: "/category-images/pexels-caio-mantovani-97605853-17905810.jpg",
-    "water-energy-and-resources": "/category-images/pexels-omar-eltahan-2157926445-35047961.jpg",
-    housing: "/category-images/pexels-beardedtexantravels-5034542.jpg",
-    infrastructure: "/category-images/pexels-yide-sun-84747826-19446467.jpg",
-    mobility: "/category-images/pexels-chatchai-kurmbabpar-2154039831-33085423.jpg",
-    technology: "/category-images/pexels-bing-kol-470434409-35232818.jpg",
-    economy: "/category-images/economy.jpg",
-    organization: "/category-images/pexels-imagevain-6622887.jpg",
-    governance: "/category-images/pexels-antonia-spantzel-774939153-18923572.jpg",
-  }
-  const fallbackImage = "/category-images/pexels-33205297-7042926.jpg"
+export const dynamic = "force-dynamic"
 
+const fallbackImage = "/category-images/pexels-33205297-7042926.jpg"
+
+// Guaranteed different image per category (used when DB image is missing)
+const SLUG_TO_IMAGE: Record<string, string> = {
+  infrastructure: "/category-images/pexels-yide-sun-84747826-19446467.jpg",
+  justice: "/category-images/pexels-antonia-spantzel-774939153-18923572.jpg",
+  health: "/category-images/pexels-feyza-altun-120534393-13006757.jpg",
+  media: "/category-images/pexels-bing-kol-470434409-35232818.jpg",
+  relations: "/category-images/pexels-julia-volk-5769308.jpg",
+  science: "/category-images/pexels-danieljschwarz-34770958.jpg",
+  spirituality: "/category-images/pexels-tamara-elnova-218645958-12236732.jpg",
+  arts: "/category-images/pexels-jean-pixels-427051121-35405252.jpg",
+  "economics-units": "/category-images/economy.jpg",
+  "economics-individual": "/category-images/pexels-caio-mantovani-97605853-17905810.jpg",
+  "economics-overall": "/category-images/pexels-omar-eltahan-2157926445-35047961.jpg",
+  educations: "/category-images/pexels-brett-sayles-30725518.jpg",
+  environment: "/category-images/pexels-ilham-zovanka-2158121497-35383157.jpg",
+  governance: "/category-images/pexels-chatchai-kurmbabpar-2154039831-33085423.jpg",
+  housing: "/category-images/pexels-beardedtexantravels-5034542.jpg",
+  other: "/category-images/pexels-imagevain-6622887.jpg",
+}
+
+function getCategoryImage(slug: string): string {
+  return SLUG_TO_IMAGE[slug] ?? fallbackImage
+}
+
+export default async function HomePage() {
   const categories = await prisma.category.findMany({
     orderBy: { name: "asc" },
   })
@@ -29,7 +40,7 @@ export default async function HomePage() {
     title: category.name,
     categoryName: category.name,
     href: `/category/solutions/${category.slug}`,
-    imageSrc: categoryImages[category.slug] ?? fallbackImage,
+    imageSrc: getCategoryImage(category.slug),
     imageAlt: `${category.name} category`,
   }))
   const problemCategoryCards = categories.map((category) => ({
@@ -37,7 +48,7 @@ export default async function HomePage() {
     title: category.name,
     categoryName: category.name,
     href: `/category/problems/${category.slug}`,
-    imageSrc: categoryImages[category.slug] ?? fallbackImage,
+    imageSrc: getCategoryImage(category.slug),
     imageAlt: `${category.name} category`,
   }))
 
