@@ -31,12 +31,10 @@ model Problem {
   categorySlug String
   upvotes      Int        @default(0)
 
-  // Rankings
+  // Rankings: Impact, Dringlichkeit (Urgency), Reichweite (Reach)
   impact       Int        @default(5)
   urgency      Int        @default(5)
-  feasibility  Int        @default(5)
-  affected     Int        @default(5)
-  costs        Int        @default(5)
+  reach        Int        @default(5)
 
   solutions    Solution[] @relation("ProblemToSolution")
 }
@@ -54,12 +52,13 @@ model Solution {
   categorySlug String
   upvotes      Int        @default(0)
 
-  // Rankings
+  // Rankings (Impact, Urgency, Feasibility only)
   impact       Int        @default(5)
   urgency      Int        @default(5)
   feasibility  Int        @default(5)
-  affected     Int        @default(5)
-  costs        Int        @default(5)
+
+  // When does this solution have its final impact?
+  timeframe    String?    // "Short Term" | "Mid Term" | "Long Term"
 
   problems     Problem[]  @relation("ProblemToSolution")
 }

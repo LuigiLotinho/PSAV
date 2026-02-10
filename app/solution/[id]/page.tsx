@@ -13,11 +13,33 @@ type PageProps = {
   }>
 }
 
+type SolutionRow = {
+  id: string
+  createdAt: Date
+  updatedAt: Date
+  title: string
+  short_text: string
+  long_text: string | null
+  categoryId: string
+  categoryName: string
+  categorySlug: string
+  upvotes: number
+  impact: number
+  urgency: number
+  feasibility: number
+  timeframe: string | null
+}
+
 export default async function SolutionDetailPage({ params }: PageProps) {
   const { id } = await params
-  const item = await prisma.solution.findUnique({
-    where: { id },
-  })
+  const rows = await prisma.$queryRaw<SolutionRow[]>`
+    SELECT "id", "createdAt", "updatedAt", "title", "short_text", "long_text",
+           "categoryId", "categoryName", "categorySlug", "upvotes",
+           "impact", "urgency", "feasibility", "timeframe"
+    FROM "Solution"
+    WHERE "id" = ${id}
+  `
+  const item = rows[0] ?? null
 
   if (!item) {
     notFound()
@@ -27,13 +49,17 @@ export default async function SolutionDetailPage({ params }: PageProps) {
     where: { categorySlug: item.categorySlug },
     orderBy: { upvotes: "desc" },
     take: 2,
+    select: {
+      id: true,
+      title: true,
+      short_text: true,
+      upvotes: true,
+    },
   })
   const rankings = {
     impact: item.impact,
     urgency: item.urgency,
     feasibility: item.feasibility,
-    affected: item.affected,
-    costs: item.costs,
   }
 
   return (
@@ -61,6 +87,9 @@ export default async function SolutionDetailPage({ params }: PageProps) {
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-2 mb-2 text-sm text-muted-foreground">
                 <Badge variant="secondary">{item.categoryName}</Badge>
+                {item.timeframe && (
+                  <Badge variant="outline">{item.timeframe}</Badge>
+                )}
                 <span>Posted 3 days ago</span>
               </div>
               <h1 className="text-2xl font-bold text-foreground">{item.title}</h1>
@@ -80,6 +109,15 @@ export default async function SolutionDetailPage({ params }: PageProps) {
           <section className="rounded-r-lg border-l-4 border-primary bg-primary/5 p-4">
             <p className="text-lg text-foreground">{item.short_text}</p>
           </section>
+
+          {item.timeframe && (
+            <section className="space-y-2">
+              <h2 className="text-lg font-semibold">Timeframe</h2>
+              <p className="text-muted-foreground">
+                When does this solution have its final impact? <strong>{item.timeframe}</strong>
+              </p>
+            </section>
+          )}
 
           <section className="space-y-3">
             <h2 className="text-lg font-semibold">Detailed Description</h2>

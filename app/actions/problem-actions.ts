@@ -1,5 +1,6 @@
 "use server"
 
+import { randomUUID } from "crypto"
 import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
@@ -12,9 +13,7 @@ export async function createProblem(data: {
   rankings: {
     impact: number
     urgency: number
-    feasibility: number
-    affected: number
-    costs: number
+    reach: number
   }
 }) {
   const { title, shortText, longText, categorySlug, rankings } = data
@@ -28,28 +27,29 @@ export async function createProblem(data: {
     throw new Error(`Kategorie "${categorySlug}" nicht gefunden.`)
   }
 
-  // 2. Problem in DB erstellen
-  const problem = await prisma.problem.create({
-    data: {
-      title,
-      short_text: shortText,
-      long_text: longText,
-      categoryId: category.id,
-      categoryName: category.name,
-      categorySlug: category.slug,
-      impact: rankings.impact,
-      urgency: rankings.urgency,
-      feasibility: rankings.feasibility,
-      affected: rankings.affected,
-      costs: rankings.costs,
-      upvotes: 0
-    }
-  })
+  // 2. Problem in DB erstellen (Raw INSERT, damit es auch ohne neu generierten Prisma-Client funktioniert)
+  const id = randomUUID()
+  const now = new Date()
+
+  const inserted = await prisma.$queryRaw<[{ id: string }]>`
+    INSERT INTO "Problem" (
+      "id", "createdAt", "updatedAt", "title", "short_text", "long_text",
+      "categoryId", "categoryName", "categorySlug", "upvotes",
+      "impact", "urgency", "reach"
+    )
+    VALUES (
+      ${id}, ${now}, ${now}, ${title}, ${shortText}, ${longText ?? null},
+      ${category.id}, ${category.name}, ${category.slug}, 0,
+      ${rankings.impact}, ${rankings.urgency}, ${rankings.reach}
+    )
+    RETURNING "id"
+  `
+  const problemId = inserted[0].id
 
   // 3. Cache aktualisieren
   revalidatePath("/")
   revalidatePath(`/category/problems/${categorySlug}`)
 
   // 4. Zur Detailseite weiterleiten
-  redirect(`/problem/${problem.id}`)
+  redirect(`/problem/${problemId}`)
 }

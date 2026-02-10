@@ -74,10 +74,39 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
       ? await prisma.problem.findMany({
           where: whereBaseProblem,
           orderBy,
+          select: {
+            id: true,
+            createdAt: true,
+            updatedAt: true,
+            title: true,
+            short_text: true,
+            long_text: true,
+            categoryId: true,
+            categoryName: true,
+            categorySlug: true,
+            upvotes: true,
+            impact: true,
+            urgency: true,
+          },
         })
       : await prisma.solution.findMany({
           where: whereBaseSolution,
           orderBy,
+          select: {
+            id: true,
+            createdAt: true,
+            updatedAt: true,
+            title: true,
+            short_text: true,
+            long_text: true,
+            categoryId: true,
+            categoryName: true,
+            categorySlug: true,
+            upvotes: true,
+            impact: true,
+            urgency: true,
+            feasibility: true,
+          },
         })
   const title = itemType === "problem" ? "Problems" : "Solutions"
   const categoryTitle = `${category.name} ${title}`

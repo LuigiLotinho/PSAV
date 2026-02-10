@@ -20,14 +20,16 @@ import { createSolution } from "@/app/actions/solution-actions"
 import { toast } from "sonner"
 
 const SHORT_MAX = 300
+const LONG_MIN = 500
 const LONG_MAX = 2500
+
+const TIMEFRAME_OPTIONS = ["Short Term", "Mid Term", "Long Term"] as const
+type Timeframe = (typeof TIMEFRAME_OPTIONS)[number]
 
 const rankingConfig = [
   { key: "impact", label: "Impact", description: "How big is the impact if implemented?" },
   { key: "urgency", label: "Urgency", description: "How time-sensitive is this solution?" },
   { key: "feasibility", label: "Feasibility", description: "How feasible is it to implement?" },
-  { key: "affected", label: "Affected", description: "How many people will benefit?" },
-  { key: "costs", label: "Costs", description: "How costly is implementation?" },
 ] as const
 
 type RankingKey = (typeof rankingConfig)[number]["key"]
@@ -45,12 +47,11 @@ export default function NewSolutionPage() {
   const [isLoadingCategories, setIsLoadingCategories] = useState(true)
   const [shortText, setShortText] = useState("")
   const [longText, setLongText] = useState("")
+  const [timeframe, setTimeframe] = useState<Timeframe>("Mid Term")
   const [rankings, setRankings] = useState<Record<RankingKey, number>>({
     impact: 5,
     urgency: 5,
     feasibility: 5,
-    affected: 5,
-    costs: 5,
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -83,6 +84,13 @@ export default function NewSolutionPage() {
       toast.error("Bitte Titel, Kategorie und Kurzbeschreibung ausfüllen.")
       return
     }
+    if (longText.trim().length < LONG_MIN) {
+      toast.warning(
+        `At least ${LONG_MIN} characters required for the detailed description. ${LONG_MIN - longText.trim().length} more needed.`,
+        { duration: 2000 }
+      )
+      return
+    }
 
     setIsSubmitting(true)
     try {
@@ -91,10 +99,15 @@ export default function NewSolutionPage() {
         shortText,
         longText,
         categorySlug: category,
+        timeframe,
         rankings,
       })
       toast.success("Lösung erfolgreich erstellt!")
     } catch (error) {
+      if (error && typeof error === "object" && "digest" in error &&
+          String((error as { digest?: string }).digest).startsWith("NEXT_REDIRECT")) {
+        return
+      }
       console.error(error)
       toast.error("Fehler beim Erstellen der Lösung.")
     } finally {
@@ -166,22 +179,42 @@ export default function NewSolutionPage() {
           </div>
 
           <div className="space-y-3">
+            <label className="text-sm font-medium">When does this solution have its final impact? *</label>
+            <Select
+              value={timeframe}
+              onValueChange={(v) => setTimeframe(v as Timeframe)}
+              disabled={isSubmitting}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {TIMEFRAME_OPTIONS.map((opt) => (
+                    <SelectItem key={opt} value={opt}>
+                      {opt}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-3">
             <div className="flex items-center justify-between gap-4">
               <label className="text-sm font-medium">Short Description (max 300 chars) *</label>
               <span className="text-xs text-muted-foreground">
                 {shortText.length}/{SHORT_MAX}
               </span>
             </div>
-            {!shortText.trim() && (
-              <div className="rounded-lg bg-green-50 p-3 text-sm dark:bg-green-950/30">
-                <p className="mb-1 font-medium text-green-700 dark:text-green-300">Helper questions:</p>
-                <ul className="space-y-1 text-xs text-green-600 dark:text-green-400">
-                  <li>• What is the solution?</li>
-                  <li>• How does it work?</li>
-                  <li>• What are the main benefits?</li>
-                </ul>
-              </div>
-            )}
+            <div className="rounded-lg bg-green-50 p-3 text-sm dark:bg-green-950/30">
+              <p className="mb-1 font-medium text-green-700 dark:text-green-300">Helper questions:</p>
+              <ul className="space-y-1 text-xs text-green-600 dark:text-green-400">
+                <li>• What is the solution?</li>
+                <li>• How does it work?</li>
+                <li>• What are the main benefits?</li>
+              </ul>
+            </div>
             <Textarea
               value={shortText}
               onChange={(event) => setShortText(event.target.value)}
@@ -193,21 +226,27 @@ export default function NewSolutionPage() {
 
           <div className="space-y-3">
             <div className="flex items-center justify-between gap-4">
-              <label className="text-sm font-medium">Detailed Description (max 2500 chars)</label>
+              <label className="text-sm font-medium">Detailed Description (min 500, max 2500 chars) *</label>
               <span className="text-xs text-muted-foreground">
                 {longText.length}/{LONG_MAX}
               </span>
             </div>
-            {!longText.trim() && (
-              <div className="rounded-lg bg-green-50 p-3 text-sm dark:bg-green-950/30">
-                <p className="mb-1 font-medium text-green-700 dark:text-green-300">Consider including:</p>
-                <ul className="space-y-1 text-xs text-green-600 dark:text-green-400">
-                  <li>• Implementation steps?</li>
-                  <li>• Resources needed?</li>
-                  <li>• Long-term sustainability?</li>
-                </ul>
-              </div>
-            )}
+            <div className="rounded-lg bg-green-50 p-3 text-sm dark:bg-green-950/30">
+              <p className="mb-1 font-medium text-green-700 dark:text-green-300">Consider including:</p>
+              <ul className="space-y-1 text-xs text-green-600 dark:text-green-400">
+                <li>• How does the solution actually work, step by step, in daily reality?</li>
+                <li>• What changes compared to the current situation?</li>
+                <li>• Who benefits directly?</li>
+                <li>• Who benefits indirectly?</li>
+                <li>• What resources (people, budget, materials) are needed?</li>
+                <li>• How do you measure success?</li>
+                <li>• How is long-term sustainability ensured?</li>
+                <li>• What materials, infrastructure, or technology are required?</li>
+                <li>• What is the expected timeline from idea to implementation?</li>
+                <li>• Who do you think should do this?</li>
+                <li>• What values or principles of Auroville does this solution align with?</li>
+              </ul>
+            </div>
             <Textarea
               value={longText}
               onChange={(event) => setLongText(event.target.value)}

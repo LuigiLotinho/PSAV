@@ -13,11 +13,32 @@ type PageProps = {
   }>
 }
 
+type ProblemRow = {
+  id: string
+  createdAt: Date
+  updatedAt: Date
+  title: string
+  short_text: string
+  long_text: string | null
+  categoryId: string
+  categoryName: string
+  categorySlug: string
+  upvotes: number
+  impact: number
+  urgency: number
+  reach: number
+}
+
 export default async function ProblemDetailPage({ params }: PageProps) {
   const { id } = await params
-  const item = await prisma.problem.findUnique({
-    where: { id },
-  })
+  const rows = await prisma.$queryRaw<ProblemRow[]>`
+    SELECT "id", "createdAt", "updatedAt", "title", "short_text", "long_text",
+           "categoryId", "categoryName", "categorySlug", "upvotes",
+           "impact", "urgency", "reach"
+    FROM "Problem"
+    WHERE "id" = ${id}
+  `
+  const item = rows[0] ?? null
 
   if (!item) {
     notFound()
@@ -27,13 +48,26 @@ export default async function ProblemDetailPage({ params }: PageProps) {
     where: { categorySlug: item.categorySlug },
     orderBy: { upvotes: "desc" },
     take: 2,
+    select: {
+      id: true,
+      createdAt: true,
+      updatedAt: true,
+      title: true,
+      short_text: true,
+      long_text: true,
+      categoryId: true,
+      categoryName: true,
+      categorySlug: true,
+      upvotes: true,
+      impact: true,
+      urgency: true,
+      feasibility: true,
+    },
   })
   const rankings = {
     impact: item.impact,
     urgency: item.urgency,
-    feasibility: item.feasibility,
-    affected: item.affected,
-    costs: item.costs,
+    reach: item.reach,
   }
 
   return (

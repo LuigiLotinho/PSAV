@@ -1,21 +1,27 @@
-import type { Rankings } from "@/lib/mock-data"
-
 type RankingGridProps = {
-  rankings: Rankings
+  /** Solutions: impact, urgency, feasibility (English). Problems: impact, urgency (Dringlichkeit), reach (Reichweite). */
+  rankings: Record<string, number>
 }
 
-const rankingMeta = [
+const solutionMeta = [
   { key: "impact", label: "Impact", color: "bg-red-500" },
   { key: "urgency", label: "Urgency", color: "bg-orange-500" },
   { key: "feasibility", label: "Feasibility", color: "bg-yellow-500" },
-  { key: "affected", label: "Affected", color: "bg-blue-500" },
-  { key: "costs", label: "Costs", color: "bg-purple-500" },
+] as const
+
+const problemMeta = [
+  { key: "impact", label: "Impact", color: "bg-red-500" },
+  { key: "urgency", label: "Urgency", color: "bg-orange-500" },
+  { key: "reach", label: "Reach", color: "bg-blue-500" },
 ] as const
 
 export function RankingGrid({ rankings }: RankingGridProps) {
+  const isProblem = "reach" in rankings
+  const rankingMeta = isProblem ? problemMeta : solutionMeta
+  const entries = rankingMeta.filter((meta) => meta.key in rankings)
   return (
-    <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-      {rankingMeta.map((meta) => {
+    <div className={`grid gap-4 ${entries.length === 3 ? "grid-cols-1 md:grid-cols-3" : "grid-cols-2 md:grid-cols-5"}`}>
+      {entries.map((meta) => {
         const value = rankings[meta.key]
         return (
           <div key={meta.key} className="text-center p-4 bg-muted/50 rounded-xl">
