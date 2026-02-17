@@ -66,8 +66,8 @@ export function ThreeDPhotoCarousel({
   }
 
   return (
-    <div className={className}>
-      <div className={`relative mx-auto w-full [perspective:1400px] ${isMobile ? "h-[300px]" : "h-[520px]"}`}>
+    <div className={`overflow-x-hidden max-w-full w-full min-w-0 ${className}`}>
+      <div className={`relative mx-auto w-full max-w-full overflow-hidden [perspective:1400px] ${isMobile ? "h-[300px]" : "h-[520px]"}`}>
         <motion.div
           className="relative h-full w-full cursor-grab active:cursor-grabbing"
           style={{ rotateY: rotation, transformStyle: "preserve-3d", touchAction: "none" }}

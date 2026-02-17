@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { ThreeDPhotoCarousel } from "@/components/ui/3d-carousel"
+import { Button } from "@/components/ui/button"
 import prisma from "@/lib/prisma"
 
 export const dynamic = "force-dynamic"
@@ -53,14 +54,14 @@ export default async function HomePage() {
   }))
 
   return (
-    <div className="min-h-screen bg-background">
-      <main className="container mx-auto px-4 py-8 md:py-10 space-y-8 md:space-y-12">
+    <div className="min-h-screen bg-background overflow-x-hidden max-w-[100vw] w-full">
+      <main className="container mx-auto px-4 py-8 md:py-10 space-y-8 md:space-y-12 max-w-full w-full min-w-0">
         <section className="space-y-2 md:space-y-3 text-center">
-          <h1 className="text-2xl md:text-3xl font-bold text-foreground">Community Problems & Solutions</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground">Community Solutions & Problems Plattform</h1>
           <p className="text-muted-foreground max-w-3xl mx-auto text-[12px] md:text-base leading-relaxed">
-            Browse the most upvoted problems and solutions across the community.
+            Browse the most upvoted solutions and problems across the community.
             <br />
-            Contribute and help inspire current and future Working Groups.
+            Contribute and help to inspire individuals and current and future working groups.
           </p>
         </section>
 
@@ -72,6 +73,15 @@ export default async function HomePage() {
         <section className="space-y-4 md:space-y-4 text-center">
           <h2 className="text-xl md:text-3xl font-semibold text-foreground/90">Problem Categories</h2>
           <ThreeDPhotoCarousel items={problemCategoryCards} />
+        </section>
+
+        <section className="flex flex-col gap-4 justify-center items-center pt-6">
+          <Button asChild size="lg" className="w-[300px] h-12 text-base bg-green-200/60 hover:bg-green-200/80 text-green-900 dark:bg-green-900/30 dark:hover:bg-green-900/50 dark:text-green-100">
+            <Link href="/guidelines">Guidelines</Link>
+          </Button>
+          <Button asChild size="lg" className="w-[300px] h-12 text-base bg-green-200/60 hover:bg-green-200/80 text-green-900 dark:bg-green-900/30 dark:hover:bg-green-900/50 dark:text-green-100">
+            <Link href="/idea-of-the-project">Idea of the project</Link>
+          </Button>
         </section>
       </main>
     </div>
