@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { Toaster } from '@/components/ui/sonner'
+import { AuthSessionProvider } from '@/components/providers/session-provider'
+import { AdminFooter } from '@/components/site/admin-footer'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -44,8 +46,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="overflow-x-hidden">
-      <body className={`font-sans antialiased overflow-x-hidden max-w-[100vw]`}>
-        {children}
+      <body className={`font-sans antialiased overflow-x-hidden max-w-[100vw] flex flex-col min-h-screen`}>
+        <AuthSessionProvider>
+        <div className="flex-1">{children}</div>
+        <AdminFooter />
         <Toaster
           position="top-center"
           richColors
@@ -56,6 +60,7 @@ export default function RootLayout({
           }}
         />
         <Analytics />
+        </AuthSessionProvider>
       </body>
     </html>
   )

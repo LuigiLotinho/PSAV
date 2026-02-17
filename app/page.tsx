@@ -2,6 +2,7 @@ import Link from "next/link"
 import { ThreeDPhotoCarousel } from "@/components/ui/3d-carousel"
 import { Button } from "@/components/ui/button"
 import prisma from "@/lib/prisma"
+import { isAdmin } from "@/lib/auth"
 
 export const dynamic = "force-dynamic"
 
@@ -32,6 +33,7 @@ function getCategoryImage(slug: string): string {
 }
 
 export default async function HomePage() {
+  const admin = await isAdmin()
   const categories = await prisma.category.findMany({
     orderBy: { name: "asc" },
   })
@@ -82,6 +84,11 @@ export default async function HomePage() {
           <Button asChild size="lg" className="w-[300px] h-12 text-base bg-green-200/60 hover:bg-green-200/80 text-green-900 dark:bg-green-900/30 dark:hover:bg-green-900/50 dark:text-green-100">
             <Link href="/idea-of-the-project">Idea of the project</Link>
           </Button>
+          {admin && (
+            <Button asChild size="lg" className="w-[300px] h-12 text-base bg-amber-200/60 hover:bg-amber-200/80 text-amber-900 dark:bg-amber-900/30 dark:hover:bg-amber-900/50 dark:text-amber-100">
+              <Link href="/admin">Admin</Link>
+            </Button>
+          )}
         </section>
       </main>
     </div>

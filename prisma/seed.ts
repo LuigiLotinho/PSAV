@@ -1,5 +1,6 @@
 require("dotenv/config")
 const { PrismaClient } = require("@prisma/client")
+const bcrypt = require("bcryptjs")
 
 const prisma = new PrismaClient()
 
@@ -89,6 +90,17 @@ async function main() {
         websiteUrl: slugToWebsiteUrl[slug] ?? null,
       },
     })
+  }
+
+  const adminEmail = "lukasweick@gmail.com"
+  const adminPassword = "Fisch123"
+  const existingAdmin = await prisma.admin.findUnique({ where: { email: adminEmail } })
+  if (!existingAdmin) {
+    const passwordHash = await bcrypt.hash(adminPassword, 10)
+    await prisma.admin.create({
+      data: { email: adminEmail, passwordHash },
+    })
+    console.log("Created admin:", adminEmail)
   }
 
   console.log(`Seeded ${categoryNames.length} categories (each with its own image, no problems or solutions).`)

@@ -1,9 +1,11 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ChevronRight, ExternalLink } from "lucide-react"
+import { ChevronRight } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import prisma from "@/lib/prisma"
 import { UpvoteButton } from "@/components/site/upvote-button"
+import { VisibilityToggleButton } from "@/components/site/visibility-toggle-button"
+import { isAdmin } from "@/lib/auth"
 
 type PageProps = {
   params: Promise<{
@@ -15,6 +17,8 @@ type PageProps = {
     q?: string
   }>
 }
+
+export const dynamic = "force-dynamic"
 
 type ItemType = "problem" | "solution"
 
@@ -36,6 +40,8 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
     notFound()
   }
 
+  const admin = await isAdmin()
+
   const sort = resolvedSearchParams?.sort ?? "most-voted"
   const query = resolvedSearchParams?.q?.trim()
   const orderBy =
@@ -47,6 +53,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
 
   const whereBaseProblem = {
     categorySlug: category.slug,
+    ...(admin ? {} : { visible: true }),
     ...(query
       ? {
           OR: [
@@ -59,6 +66,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
 
   const whereBaseSolution = {
     categorySlug: category.slug,
+    ...(admin ? {} : { visible: true }),
     ...(query
       ? {
           OR: [
@@ -87,6 +95,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
             upvotes: true,
             impact: true,
             urgency: true,
+            visible: true,
           },
         })
       : await prisma.solution.findMany({
@@ -106,6 +115,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
             impact: true,
             urgency: true,
             feasibility: true,
+            visible: true,
           },
         })
   const title = itemType === "problem" ? "Problems" : "Solutions"
@@ -142,17 +152,6 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
               >
                 {itemType === "problem" ? "New Problem" : "New Solution"}
               </Link>
-              {category.websiteUrl ? (
-                <a
-                  href={category.websiteUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-input bg-background text-foreground text-sm font-medium hover:bg-muted/80 transition-colors"
-                >
-                  <ExternalLink className="h-4 w-4" />
-                  More about {category.name}
-                </a>
-              ) : null}
             </div>
           </div>
         </section>
@@ -205,12 +204,14 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
 
         <section className="space-y-4">
           {items.map((item) => (
-            <Link
+            <div
               key={item.id}
-              href={itemType === "problem" ? `/problem/${item.id}` : `/solution/${item.id}`}
-              className="group block border rounded-xl p-4 bg-background hover:border-primary transition-colors"
+              className="group flex items-start gap-2 border rounded-xl p-4 bg-background hover:border-primary transition-colors"
             >
-              <div className="flex items-start gap-4">
+              <Link
+                href={itemType === "problem" ? `/problem/${item.id}` : `/solution/${item.id}`}
+                className="flex-1 flex items-start gap-4 min-w-0"
+              >
                 <div className="flex flex-col items-center gap-1 min-w-[60px]">
                   <UpvoteButton
                     type={itemType}
@@ -222,14 +223,21 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
                   <span className="text-xs text-muted-foreground">upvotes</span>
                 </div>
 
-                <div className="flex-1">
+                <div className="flex-1 min-w-0">
                   <h3 className="font-semibold text-lg mb-1">{item.title}</h3>
                   <p className="text-sm text-muted-foreground line-clamp-2">{item.short_text}</p>
                 </div>
 
-                <ChevronRight className="h-5 w-5 text-muted-foreground mt-4" />
-              </div>
-            </Link>
+                <ChevronRight className="h-5 w-5 text-muted-foreground mt-4 shrink-0" />
+              </Link>
+              {admin && (
+                <VisibilityToggleButton
+                  type={itemType}
+                  id={item.id}
+                  visible={item.visible}
+                />
+              )}
+            </div>
           ))}
         </section>
 

@@ -6,6 +6,10 @@ import { RankingGrid } from "@/components/site/ranking-grid"
 import { Badge } from "@/components/ui/badge"
 import prisma from "@/lib/prisma"
 import { UpvoteButton } from "@/components/site/upvote-button"
+import { VisibilityToggleButton } from "@/components/site/visibility-toggle-button"
+import { isAdmin } from "@/lib/auth"
+
+export const dynamic = "force-dynamic"
 
 type PageProps = {
   params: Promise<{
@@ -13,41 +17,12 @@ type PageProps = {
   }>
 }
 
-type ProblemRow = {
-  id: string
-  createdAt: Date
-  updatedAt: Date
-  title: string
-  short_text: string
-  long_text: string | null
-  categoryId: string
-  categoryName: string
-  categorySlug: string
-  upvotes: number
-  impact: number
-  urgency: number
-  reach: number
-}
-
 export default async function ProblemDetailPage({ params }: PageProps) {
   const { id } = await params
-  const rows = await prisma.$queryRaw<ProblemRow[]>`
-    SELECT "id", "createdAt", "updatedAt", "title", "short_text", "long_text",
-           "categoryId", "categoryName", "categorySlug", "upvotes",
-           "impact", "urgency", "reach"
-    FROM "Problem"
-    WHERE "id" = ${id}
-  `
-  const item = rows[0] ?? null
+  const admin = await isAdmin()
 
-  if (!item) {
-    notFound()
-  }
-
-  const linkedSolutions = await prisma.solution.findMany({
-    where: { categorySlug: item.categorySlug },
-    orderBy: { upvotes: "desc" },
-    take: 2,
+  const item = await prisma.problem.findUnique({
+    where: { id },
     select: {
       id: true,
       createdAt: true,
@@ -61,7 +36,32 @@ export default async function ProblemDetailPage({ params }: PageProps) {
       upvotes: true,
       impact: true,
       urgency: true,
-      feasibility: true,
+      reach: true,
+      visible: true,
+    },
+  })
+
+  if (!item) {
+    notFound()
+  }
+
+  if (!admin && !item.visible) {
+    notFound()
+  }
+
+  const linkedSolutions = await prisma.solution.findMany({
+    where: {
+      categorySlug: item.categorySlug,
+      ...(admin ? {} : { visible: true }),
+    },
+    orderBy: { upvotes: "desc" },
+    take: 2,
+    select: {
+      id: true,
+      title: true,
+      short_text: true,
+      upvotes: true,
+      visible: true,
     },
   })
   const rankings = {
@@ -99,15 +99,24 @@ export default async function ProblemDetailPage({ params }: PageProps) {
               </div>
               <h1 className="text-2xl font-bold text-foreground">{item.title}</h1>
             </div>
-            <div className="flex flex-col items-center gap-1 rounded-xl bg-muted/50 p-4">
-              <UpvoteButton
-                type="problem"
-                id={item.id}
-                className="rounded-lg p-2 hover:bg-background"
-                iconClassName="h-6 w-6 text-primary"
-              />
-              <span className="text-2xl font-bold">{item.upvotes}</span>
-              <span className="text-xs text-muted-foreground">votes</span>
+            <div className="flex items-center gap-2">
+              <div className="flex flex-col items-center gap-1 rounded-xl bg-muted/50 p-4">
+                <UpvoteButton
+                  type="problem"
+                  id={item.id}
+                  className="rounded-lg p-2 hover:bg-background"
+                  iconClassName="h-6 w-6 text-primary"
+                />
+                <span className="text-2xl font-bold">{item.upvotes}</span>
+                <span className="text-xs text-muted-foreground">votes</span>
+              </div>
+              {admin && (
+                <VisibilityToggleButton
+                  type="problem"
+                  id={item.id}
+                  visible={item.visible}
+                />
+              )}
             </div>
           </section>
 
@@ -132,12 +141,14 @@ export default async function ProblemDetailPage({ params }: PageProps) {
             </h2>
             <div className="space-y-3">
               {linkedSolutions.map((solution) => (
-                <Link
+                <div
                   key={solution.id}
-                  href={`/solution/${solution.id}`}
-                  className="block rounded-xl border p-4 transition-colors hover:border-primary"
+                  className="flex items-center gap-2 rounded-xl border p-4 transition-colors hover:border-primary"
                 >
-                  <div className="flex items-center justify-between gap-4">
+                  <Link
+                    href={`/solution/${solution.id}`}
+                    className="flex-1 flex items-center justify-between gap-4 min-w-0"
+                  >
                     <div className="flex items-center gap-4">
                       <div className="flex flex-col items-center">
                         <ArrowUp className="h-4 w-4 text-primary" />
@@ -148,9 +159,16 @@ export default async function ProblemDetailPage({ params }: PageProps) {
                         <p className="text-sm text-muted-foreground line-clamp-1">{solution.short_text}</p>
                       </div>
                     </div>
-                    <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                  </div>
-                </Link>
+                    <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0" />
+                  </Link>
+                  {admin && (
+                    <VisibilityToggleButton
+                      type="solution"
+                      id={solution.id}
+                      visible={solution.visible}
+                    />
+                  )}
+                </div>
               ))}
             </div>
           </section>
