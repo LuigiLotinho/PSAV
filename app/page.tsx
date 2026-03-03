@@ -78,10 +78,10 @@ export default async function HomePage() {
         </section>
 
         <section className="flex flex-col gap-4 justify-center items-center pt-6">
-          <Button asChild size="lg" className="w-[300px] h-12 text-base bg-green-200/60 hover:bg-green-200/80 text-green-900 dark:bg-green-900/30 dark:hover:bg-green-900/50 dark:text-green-100">
+          <Button asChild size="lg" className="w-[300px] h-12 text-base bg-white hover:bg-gray-100 text-black border-2 border-black dark:bg-white dark:hover:bg-gray-100 dark:text-black dark:border-black">
             <Link href="/guidelines">Guidelines</Link>
           </Button>
-          <Button asChild size="lg" className="w-[300px] h-12 text-base bg-green-200/60 hover:bg-green-200/80 text-green-900 dark:bg-green-900/30 dark:hover:bg-green-900/50 dark:text-green-100">
+          <Button asChild size="lg" className="w-[300px] h-12 text-base bg-white hover:bg-gray-100 text-black border-2 border-black dark:bg-white dark:hover:bg-gray-100 dark:text-black dark:border-black">
             <Link href="/idea-of-the-project">Idea of the project</Link>
           </Button>
           {admin && (

@@ -140,6 +140,7 @@ export default async function SolutionDetailPage({ params }: PageProps) {
           <section className="space-y-3">
             <h2 className="text-lg font-semibold">Detailed Description</h2>
             <p className="text-muted-foreground">{item.long_text}</p>
+            {/* Join the dialogue: <Link href={`/dialoge/solution/${item.id}`}>Join the dialogue</Link> */}
           </section>
 
           <section className="space-y-4">
