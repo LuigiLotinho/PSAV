@@ -1,16 +1,6 @@
-import { Suspense } from "react"
-import LoginForm from "./LoginForm"
+import { redirect } from "next/navigation"
+import { defaultLocale } from "@/lib/i18n/locales"
 
-export default function LoginPage() {
-  return (
-    <Suspense
-      fallback={
-        <div className="min-h-screen bg-background flex items-center justify-center">
-          <div className="text-sm text-muted-foreground">Loading...</div>
-        </div>
-      }
-    >
-      <LoginForm />
-    </Suspense>
-  )
+export default function LoginRedirect() {
+  redirect(`/${defaultLocale}/login`)
 }

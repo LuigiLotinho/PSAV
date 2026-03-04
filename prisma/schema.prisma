@@ -43,6 +43,10 @@ model Problem {
   urgency      Int        @default(5)
   reach        Int        @default(5)
   visible      Boolean    @default(true)
+  reviewed     Boolean    @default(false)
+
+  contentLocale String   @default("en")
+  translations  Json?
 
   solutions    Solution[] @relation("ProblemToSolution")
 }
@@ -68,6 +72,10 @@ model Solution {
   // When does this solution have its final impact?
   timeframe    String?    // "Short Term" | "Mid Term" | "Long Term"
   visible      Boolean    @default(true)
+  reviewed     Boolean    @default(false)
+
+  contentLocale String   @default("en")
+  translations  Json?
 
   problems     Problem[]  @relation("ProblemToSolution")
 }

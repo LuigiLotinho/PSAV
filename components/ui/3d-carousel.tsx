@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { useMemo, useRef } from "react"
 import { motion, useMotionValue } from "framer-motion"
 import { useIsMobile } from "@/hooks/use-mobile"
@@ -65,6 +64,27 @@ export function ThreeDPhotoCarousel({
     )
   }
 
+  // #region agent log
+  const firstItem = items[0]
+  fetch("http://127.0.0.1:7804/ingest/5ea61563-ec3a-43cd-a7d9-9a6eae2055cc", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "8d52fc" },
+    body: JSON.stringify({
+      sessionId: "8d52fc",
+      location: "components/ui/3d-carousel.tsx:items",
+      message: "Carousel received items",
+      data: {
+        itemsLength: items.length,
+        firstItemImageSrc: firstItem?.imageSrc,
+        firstItemHasImage: Boolean(firstItem?.imageSrc),
+        firstItemKeys: firstItem ? Object.keys(firstItem) : [],
+      },
+      timestamp: Date.now(),
+      hypothesisId: "H1_H3_H5",
+    }),
+  }).catch(() => {})
+  // #endregion
+
   return (
     <div className={`overflow-x-hidden max-w-full w-full min-w-0 ${className}`}>
       <div className={`relative mx-auto w-full max-w-full overflow-hidden [perspective:1400px] ${isMobile ? "h-[300px]" : "h-[520px]"}`}>
@@ -116,13 +136,41 @@ export function ThreeDPhotoCarousel({
               <>
                 {hasImage && (
                   <div className="absolute inset-0 z-0">
-                    <Image
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
                       src={item.imageSrc!}
                       alt={item.imageAlt || ""}
-                      fill
-                      sizes={`${cardWidth}px`}
-                      className="object-cover"
-                      priority={index < 4}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading={index < 4 ? "eager" : "lazy"}
+                      onLoad={() => {
+                        fetch("http://127.0.0.1:7804/ingest/5ea61563-ec3a-43cd-a7d9-9a6eae2055cc", {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "8d52fc" },
+                          body: JSON.stringify({
+                            sessionId: "8d52fc",
+                            location: "components/ui/3d-carousel.tsx:Image.onLoad",
+                            message: "Image loaded successfully",
+                            data: { itemId: item.id, imageSrc: item.imageSrc, index },
+                            timestamp: Date.now(),
+                            hypothesisId: "H4",
+                          }),
+                        }).catch(() => {})
+                      }}
+                      onError={() => {
+                        const fullUrl = typeof window !== "undefined" ? window.location.origin + item.imageSrc : "ssr"
+                        fetch("http://127.0.0.1:7804/ingest/5ea61563-ec3a-43cd-a7d9-9a6eae2055cc", {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "8d52fc" },
+                          body: JSON.stringify({
+                            sessionId: "8d52fc",
+                            location: "components/ui/3d-carousel.tsx:Image.onError",
+                            message: "Image failed to load",
+                            data: { itemId: item.id, imageSrc: item.imageSrc, index, fullUrl },
+                            timestamp: Date.now(),
+                            hypothesisId: "H3",
+                          }),
+                        }).catch(() => {})
+                      }}
                     />
                     <div className="absolute inset-0 bg-black/40" />
                   </div>

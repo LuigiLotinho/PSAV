@@ -1,12 +1,6 @@
 import { redirect } from "next/navigation"
-import { isAdmin } from "@/lib/auth"
-import { AdminPageClient } from "./admin-page-client"
+import { defaultLocale } from "@/lib/i18n/locales"
 
-export default async function AdminPage() {
-  const admin = await isAdmin()
-  if (!admin) {
-    redirect("/login")
-  }
-
-  return <AdminPageClient />
+export default function AdminRedirect() {
+  redirect(`/${defaultLocale}/admin`)
 }

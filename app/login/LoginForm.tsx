@@ -3,15 +3,24 @@
 import { useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { signIn } from "next-auth/react"
+import { useTranslations } from "next-intl"
+import { type Locale } from "@/lib/i18n/locales"
+import { localePath } from "@/lib/i18n/locales"
 
-export default function LoginForm() {
+type LoginFormProps = {
+  locale?: Locale
+}
+
+export default function LoginForm({ locale }: LoginFormProps) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
-  const callbackUrl = searchParams.get("callbackUrl") ?? "/"
+  const defaultCallback = locale ? localePath(locale, "/") : "/"
+  const callbackUrl = searchParams.get("callbackUrl") ?? defaultCallback
+  const t = useTranslations("auth")
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -24,13 +33,13 @@ export default function LoginForm() {
         redirect: false,
       })
       if (res?.error) {
-        setError("Invalid email or password.")
+        setError(t("invalidCredentials"))
         return
       }
       router.push(callbackUrl)
       router.refresh()
     } catch {
-      setError("Something went wrong.")
+      setError(t("genericError"))
     } finally {
       setLoading(false)
     }
@@ -39,11 +48,11 @@ export default function LoginForm() {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-4">
       <main className="w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center mb-6">Admin Login</h1>
+        <h1 className="text-2xl font-bold text-center mb-6">{t("adminLogin")}</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-sm font-medium mb-2">
-              Email
+              {t("email")}
             </label>
             <input
               id="email"
@@ -57,7 +66,7 @@ export default function LoginForm() {
           </div>
           <div>
             <label htmlFor="password" className="block text-sm font-medium mb-2">
-              Password
+              {t("password")}
             </label>
             <input
               id="password"
@@ -76,7 +85,7 @@ export default function LoginForm() {
             disabled={loading}
             className="w-full rounded-md bg-primary text-primary-foreground py-2 px-4 text-sm font-medium hover:bg-primary/90 disabled:opacity-50"
           >
-            {loading ? "Signing in..." : "Sign in"}
+            {loading ? t("signingIn") : t("signIn")}
           </button>
         </form>
       </main>

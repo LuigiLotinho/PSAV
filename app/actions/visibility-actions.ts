@@ -31,3 +31,31 @@ export async function toggleVisibility(
   revalidatePath("/category")
   return { ok: true }
 }
+
+export async function toggleReviewed(
+  type: "problem" | "solution",
+  id: string
+): Promise<{ ok: boolean; error?: string }> {
+  const admin = await isAdmin()
+  if (!admin) return { ok: false, error: "Unauthorized" }
+
+  if (type === "problem") {
+    const p = await prisma.problem.findUnique({ where: { id } })
+    if (!p) return { ok: false, error: "Not found" }
+    await prisma.problem.update({
+      where: { id },
+      data: { reviewed: !p.reviewed },
+    })
+  } else {
+    const s = await prisma.solution.findUnique({ where: { id } })
+    if (!s) return { ok: false, error: "Not found" }
+    await prisma.solution.update({
+      where: { id },
+      data: { reviewed: !s.reviewed },
+    })
+  }
+
+  revalidatePath("/", "layout")
+  revalidatePath("/admin")
+  return { ok: true }
+}
