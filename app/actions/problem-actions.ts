@@ -37,7 +37,8 @@ export async function createProblem(data: {
       locale
     )
   } catch (err) {
-    console.warn("Translation failed, saving without translations:", err)
+    const msg = err instanceof Error ? err.message : String(err)
+    console.error("[createProblem] Translation failed:", msg, err)
   }
 
   const id = randomUUID()

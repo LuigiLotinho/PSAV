@@ -1,9 +1,10 @@
 import OpenAI from "openai"
 import { locales } from "@/lib/i18n/locales"
 
-const openai = process.env.OPENAI_API_KEY
-  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
-  : null
+function getOpenAI(): OpenAI | null {
+  const key = process.env.OPENAI_API_KEY
+  return key ? new OpenAI({ apiKey: key }) : null
+}
 
 /** Translates a single text from source to target locale (OpenAI gpt-4o-mini) */
 export async function translateText(
@@ -13,6 +14,8 @@ export async function translateText(
 ): Promise<string> {
   if (!text?.trim()) return text
   if (sourceLocale === targetLocale) return text
+
+  const openai = getOpenAI()
   if (!openai) {
     console.warn("OPENAI_API_KEY not set; returning original text")
     return text
