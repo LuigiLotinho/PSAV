@@ -20,7 +20,7 @@ const categoryNames = [
   "Environment",
   "Governance",
   "Housing",
-  "Other",
+  "All",
 ]
 
 function slugify(value: string): string {
@@ -50,7 +50,7 @@ const slugToImage: Record<string, string> = {
   environment: "/category-images/pexels-ilham-zovanka-2158121497-35383157.jpg",
   governance: "/category-images/pexels-chatchai-kurmbabpar-2154039831-33085423.jpg",
   housing: "/category-images/pexels-beardedtexantravels-5034542.jpg",
-  other: "/category-images/pexels-imagevain-6622887.jpg",
+  all: "/category-images/pexels-imagevain-6622887.jpg",
 }
 
 // Matching website URL per category (can be edited later)
@@ -70,7 +70,7 @@ const slugToWebsiteUrl: Record<string, string> = {
   environment: "https://en.wikipedia.org/wiki/Environment_(biophysical)",
   governance: "https://en.wikipedia.org/wiki/Governance",
   housing: "https://en.wikipedia.org/wiki/Housing",
-  other: "https://en.wikipedia.org/wiki/Main_Page",
+  all: "https://en.wikipedia.org/wiki/Main_Page",
 }
 
 async function main() {

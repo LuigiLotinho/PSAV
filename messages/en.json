@@ -7,7 +7,8 @@
     "guidelinesButton": "Guidelines",
     "ideaButton": "Idea of the project",
     "adminButton": "Admin",
-    "noCategories": "No categories yet."
+    "noCategories": "No categories yet.",
+    "newestSolutions": "Newest Solutions"
   },
   "language": {
     "label": "Language"
@@ -33,7 +34,7 @@
     "environment": "Environment",
     "governance": "Governance",
     "housing": "Housing",
-    "other": "Other"
+    "all": "All"
   },
   "problem": {
     "newTitle": "Submit a Problem",

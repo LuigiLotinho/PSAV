@@ -7,7 +7,8 @@
     "guidelinesButton": "მითითებები",
     "ideaButton": "პროექტის იდეა",
     "adminButton": "ადმინი",
-    "noCategories": "ჯერ არ არის კატეგორიები."
+    "noCategories": "ჯერ არ არის კატეგორიები.",
+    "newestSolutions": "ახალი გადაწყვეტილებები"
   },
   "language": { "label": "ენა" },
   "nav": { "home": "მთავარი", "problems": "პრობლემები", "solutions": "გადაწყვეტილებები" },
@@ -27,7 +28,7 @@
     "environment": "გარემო",
     "governance": "მმართველობა",
     "housing": "საცხოვრებელი",
-    "other": "სხვა"
+    "all": "ყველა"
   },
   "problem": {
     "newTitle": "პრობლემის გაგზავნა",

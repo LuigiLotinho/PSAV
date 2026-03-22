@@ -7,7 +7,8 @@
     "guidelinesButton": "गाइडलाइन्स",
     "ideaButton": "प्रोजेक्ट का आईडिया",
     "adminButton": "एडमिन",
-    "noCategories": "अभी कोई कैटेगरी नहीं है."
+    "noCategories": "अभी कोई कैटेगरी नहीं है.",
+    "newestSolutions": "नवीनतम समाधान"
   },
   "language": { "label": "भाषा" },
   "nav": { "home": "होम", "problems": "प्रॉब्लम्स", "solutions": "सॉल्यूशन्स" },
@@ -27,7 +28,7 @@
     "environment": "पर्यावरण",
     "governance": "शासन",
     "housing": "आवास",
-    "other": "अन्य"
+    "all": "सभी"
   },
   "problem": {
     "newTitle": "प्रॉब्लम सबमिट करें",

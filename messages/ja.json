@@ -7,7 +7,8 @@
     "guidelinesButton": "ガイドライン",
     "ideaButton": "プロジェクトの趣旨",
     "adminButton": "管理者",
-    "noCategories": "カテゴリはまだありません。"
+    "noCategories": "カテゴリはまだありません。",
+    "newestSolutions": "最新のソリューション"
   },
   "language": { "label": "言語" },
   "nav": { "home": "ホーム", "problems": "問題", "solutions": "ソリューション" },
@@ -27,7 +28,7 @@
     "environment": "環境",
     "governance": "ガバナンス",
     "housing": "住宅",
-    "other": "その他"
+    "all": "すべて"
   },
   "problem": {
     "newTitle": "問題を投稿",

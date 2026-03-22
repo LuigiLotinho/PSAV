@@ -7,7 +7,8 @@
     "guidelinesButton": "가이드라인",
     "ideaButton": "프로젝트 아이디어",
     "adminButton": "관리자",
-    "noCategories": "아직 카테고리가 없습니다."
+    "noCategories": "아직 카테고리가 없습니다.",
+    "newestSolutions": "최신 솔루션"
   },
   "language": { "label": "언어" },
   "nav": { "home": "홈", "problems": "문제", "solutions": "솔루션" },
@@ -27,7 +28,7 @@
     "environment": "환경",
     "governance": "거버넌스",
     "housing": "주거",
-    "other": "기타"
+    "all": "전체"
   },
   "problem": {
     "newTitle": "문제 제출",

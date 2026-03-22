@@ -7,7 +7,8 @@
     "guidelinesButton": " வழிகாட்டுதல்கள்",
     "ideaButton": "திட்ட யோசனை",
     "adminButton": "நிர்வாகி",
-    "noCategories": "இன்னும் வகைகள் இல்லை."
+    "noCategories": "இன்னும் வகைகள் இல்லை.",
+    "newestSolutions": "மிகவும் சமீபத்திய தீர்வுகள்"
   },
   "language": { "label": "மொழி" },
   "nav": { "home": "முகப்பு", "problems": "பிரச்சனைகள்", "solutions": "தீர்வுகள்" },
@@ -27,7 +28,7 @@
     "environment": "சூழல்",
     "governance": "ஆளுமை",
     "housing": "வீடமைப்பு",
-    "other": "மற்றவை"
+    "all": "அனைத்தும்"
   },
   "problem": {
     "newTitle": "பிரச்சனையை சமர்ப்பி",

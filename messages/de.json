@@ -7,7 +7,8 @@
     "guidelinesButton": "Richtlinien",
     "ideaButton": "Idee des Projekts",
     "adminButton": "Admin",
-    "noCategories": "Noch keine Kategorien."
+    "noCategories": "Noch keine Kategorien.",
+    "newestSolutions": "Neueste Lösungen"
   },
   "language": { "label": "Sprache" },
   "nav": { "home": "Start", "problems": "Probleme", "solutions": "Lösungen" },
@@ -27,7 +28,7 @@
     "environment": "Umwelt",
     "governance": "Governance",
     "housing": "Wohnen",
-    "other": "Sonstiges"
+    "all": "Alle"
   },
   "problem": {
     "newTitle": "Problem einreichen",

@@ -6,6 +6,7 @@ import prisma from "@/lib/prisma"
 import { isAdmin } from "@/lib/auth"
 import { getTranslations } from "next-intl/server"
 import { localePath, type Locale } from "@/lib/i18n/locales"
+import { getLocalizedContent } from "@/lib/translation"
 
 export const dynamic = "force-dynamic"
 
@@ -27,7 +28,7 @@ const SLUG_TO_IMAGE: Record<string, string> = {
   environment: "/category-images/pexels-ilham-zovanka-2158121497-35383157.jpg",
   governance: "/category-images/pexels-chatchai-kurmbabpar-2154039831-33085423.jpg",
   housing: "/category-images/pexels-beardedtexantravels-5034542.jpg",
-  other: "/category-images/pexels-imagevain-6622887.jpg",
+  all: "/category-images/pexels-imagevain-6622887.jpg",
 }
 
 function getCategoryImage(slug: string): string {
@@ -70,6 +71,18 @@ export default async function HomePage({ params }: PageProps) {
       imageAlt: `${label} category`,
     }
   })
+
+  const newestSolutions = await prisma.solution.findMany({
+    where: admin ? undefined : { visible: true },
+    orderBy: { createdAt: "desc" },
+    take: 5,
+    select: { id: true, title: true, short_text: true, translations: true },
+  })
+
+  const localizedNewestSolutions = newestSolutions.map((s) => ({
+    ...s,
+    display: getLocalizedContent(s, locale),
+  }))
 
   // #region agent log
   if (typeof fetch !== "undefined") {
@@ -118,6 +131,22 @@ export default async function HomePage({ params }: PageProps) {
         </section>
 
         <LanguageSwitcher currentLocale={locale} label={tLang("label")} />
+
+        <section className="space-y-4 text-center pt-4">
+          <h2 className="text-xl md:text-2xl font-semibold text-foreground/90">{t("newestSolutions")}</h2>
+          <ul className="flex flex-col gap-2 max-w-xl mx-auto text-left">
+            {localizedNewestSolutions.map((solution) => (
+              <li key={solution.id}>
+                <Link
+                  href={localePath(locale, `/solution/${solution.id}`)}
+                  className="block rounded-lg border px-4 py-3 text-foreground hover:bg-muted/50 hover:border-primary transition-colors"
+                >
+                  {solution.display.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
 
         <section className="flex flex-col gap-4 justify-center items-center pt-6">
           <Button asChild size="lg" className="w-[300px] h-12 text-base bg-white hover:bg-gray-100 text-black border-2 border-black dark:bg-white dark:hover:bg-gray-100 dark:text-black dark:border-black">
