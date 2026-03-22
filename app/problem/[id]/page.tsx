@@ -121,12 +121,12 @@ export default async function ProblemDetailPage({ params }: PageProps) {
           </section>
 
           <section className="rounded-r-lg border-l-4 border-primary bg-primary/5 p-4">
-            <p className="text-lg text-foreground">{item.short_text}</p>
+            <p className="text-lg text-foreground whitespace-pre-line">{item.short_text}</p>
           </section>
 
           <section className="space-y-3">
             <h2 className="text-lg font-semibold">Detailed Description</h2>
-            <p className="text-muted-foreground">{item.long_text}</p>
+            <p className="text-muted-foreground whitespace-pre-line">{item.long_text}</p>
             {/* Join the dialogue: <Link href={`/dialoge/problem/${item.id}`}>Join the dialogue</Link> */}
           </section>
 

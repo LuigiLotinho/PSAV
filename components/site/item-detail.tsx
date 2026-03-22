@@ -19,12 +19,12 @@ export function ItemDetail({ item }: ItemDetailProps) {
       </div>
 
       <div className="bg-primary/5 border-l-4 border-primary p-4 rounded-r-lg">
-        <p className="text-lg text-foreground">{item.short_text}</p>
+        <p className="text-lg text-foreground whitespace-pre-line">{item.short_text}</p>
       </div>
 
       <div>
         <h2 className="text-lg font-semibold mb-3">Detailed Description</h2>
-        <p className="text-muted-foreground">{item.long_text}</p>
+        <p className="text-muted-foreground whitespace-pre-line">{item.long_text}</p>
       </div>
 
       <div className="space-y-4">

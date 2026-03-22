@@ -27,7 +27,7 @@ async function translateText(text: string, source: string, target: string): Prom
     messages: [
       {
         role: "system",
-        content: `Translate from ${localeNames[source] || source} to ${localeNames[target] || target}. Output only the translation.`,
+        content: `Translate from ${localeNames[source] || source} to ${localeNames[target] || target}. CRITICAL: Preserve all paragraph breaks and line breaks (\\n) exactly as in the original. Do not merge paragraphs. Output only the translation.`,
       },
       { role: "user", content: text },
     ],

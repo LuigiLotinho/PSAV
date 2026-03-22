@@ -29,7 +29,7 @@ export async function translateText(
     messages: [
       {
         role: "system",
-        content: `You are a professional translator. Translate the following text from ${sourceName} to ${targetName}. Preserve formatting, line breaks, and tone. Output only the translation, nothing else.`,
+        content: `You are a professional translator. Translate the following text from ${sourceName} to ${targetName}. CRITICAL: Preserve all paragraph breaks and line breaks (\\n) exactly as in the original. Do not merge paragraphs. Keep the same structure. Output only the translation, nothing else.`,
       },
       { role: "user", content: text },
     ],

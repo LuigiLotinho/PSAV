@@ -147,7 +147,7 @@ export default async function SolutionDetailPage({ params }: PageProps) {
           </section>
 
           <section className="rounded-r-lg border-l-4 border-primary bg-primary/5 p-4">
-            <p className="text-lg text-foreground">{localized.short_text}</p>
+            <p className="text-lg text-foreground whitespace-pre-line">{localized.short_text}</p>
           </section>
 
           {item.timeframe && (
@@ -161,7 +161,7 @@ export default async function SolutionDetailPage({ params }: PageProps) {
 
           <section className="space-y-3">
             <h2 className="text-lg font-semibold">{t("detailedDescription")}</h2>
-            <p className="text-muted-foreground">{localized.long_text}</p>
+            <p className="text-muted-foreground whitespace-pre-line">{localized.long_text}</p>
           </section>
 
           <section className="space-y-4">
