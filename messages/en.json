@@ -144,6 +144,8 @@
     "solutions": "Solutions",
     "problemsInCategory": "{count} problems in this category",
     "solutionsInCategory": "{count} solutions in this category",
+    "problemsAll": "{count} problems in total",
+    "solutionsAll": "{count} solutions in total",
     "newProblem": "New Problem",
     "newSolution": "New Solution",
     "sortBy": "Sort by:",

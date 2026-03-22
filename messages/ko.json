@@ -138,6 +138,8 @@
     "solutions": "솔루션",
     "problemsInCategory": "이 카테고리에 {count}개 문제",
     "solutionsInCategory": "이 카테고리에 {count}개 솔루션",
+    "problemsAll": "총 {count}개 문제",
+    "solutionsAll": "총 {count}개 솔루션",
     "newProblem": "새 문제",
     "newSolution": "새 솔루션",
     "sortBy": "정렬:",

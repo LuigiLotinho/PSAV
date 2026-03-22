@@ -51,8 +51,9 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
         ? { urgency: "desc" }
         : { upvotes: "desc" }
 
-  const whereBaseProblem = {
-    categorySlug: category.slug,
+  const isAllCategory = slug === "all"
+  const baseWhere = {
+    ...(isAllCategory ? {} : { categorySlug: category.slug }),
     ...(admin ? {} : { visible: true }),
     ...(query
       ? {
@@ -63,19 +64,8 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
         }
       : {}),
   }
-
-  const whereBaseSolution = {
-    categorySlug: category.slug,
-    ...(admin ? {} : { visible: true }),
-    ...(query
-      ? {
-          OR: [
-            { title: { contains: query, mode: "insensitive" } },
-            { short_text: { contains: query, mode: "insensitive" } },
-          ],
-        }
-      : {}),
-  }
+  const whereBaseProblem = baseWhere
+  const whereBaseSolution = baseWhere
 
   const items =
     itemType === "problem"
@@ -224,7 +214,14 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-lg mb-1">{item.title}</h3>
+                  <div className="flex flex-wrap items-center gap-2 mb-1">
+                    <h3 className="font-semibold text-lg">{item.title}</h3>
+                    {isAllCategory && (
+                      <Badge variant="secondary" className="text-xs font-normal">
+                        {item.categoryName}
+                      </Badge>
+                    )}
+                  </div>
                   <p className="text-sm text-muted-foreground line-clamp-2">{item.short_text}</p>
                 </div>
 

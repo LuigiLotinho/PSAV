@@ -138,6 +138,8 @@
     "solutions": "தீர்வுகள்",
     "problemsInCategory": "இந்த வகையில் {count} பிரச்சனைகள்",
     "solutionsInCategory": "இந்த வகையில் {count} தீர்வுகள்",
+    "problemsAll": "மொத்தம் {count} பிரச்சனைகள்",
+    "solutionsAll": "மொத்தம் {count} தீர்வுகள்",
     "newProblem": "புதிய பிரச்சனை",
     "newSolution": "புதிய தீர்வு",
     "sortBy": "வரிசைப்படுத்து:",

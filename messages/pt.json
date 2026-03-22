@@ -138,6 +138,8 @@
     "solutions": "Soluções",
     "problemsInCategory": "{count} problemas nesta categoria",
     "solutionsInCategory": "{count} soluções nesta categoria",
+    "problemsAll": "{count} problemas no total",
+    "solutionsAll": "{count} soluções no total",
     "newProblem": "Novo problema",
     "newSolution": "Nova solução",
     "sortBy": "Ordenar por:",

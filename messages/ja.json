@@ -138,6 +138,8 @@
     "solutions": "ソリューション",
     "problemsInCategory": "このカテゴリに{count}件の問題",
     "solutionsInCategory": "このカテゴリに{count}件のソリューション",
+    "problemsAll": "合計{count}件の問題",
+    "solutionsAll": "合計{count}件のソリューション",
     "newProblem": "新しい問題",
     "newSolution": "新しいソリューション",
     "sortBy": "並び替え：",

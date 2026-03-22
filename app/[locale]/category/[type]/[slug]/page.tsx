@@ -40,6 +40,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
   const t = await getTranslations({ locale, namespace: "category" })
   const tNav = await getTranslations({ locale, namespace: "nav" })
   const tDetail = await getTranslations({ locale, namespace: "detail" })
+  const tCategories = await getTranslations({ locale, namespace: "categories" })
   const admin = await isAdmin()
 
   const sort = resolvedSearchParams?.sort ?? "most-voted"
@@ -51,8 +52,9 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
         ? { urgency: "desc" }
         : { upvotes: "desc" }
 
-  const whereBaseProblem = {
-    categorySlug: category.slug,
+  const isAllCategory = slug === "all"
+  const baseWhere = {
+    ...(isAllCategory ? {} : { categorySlug: category.slug }),
     ...(admin ? {} : { visible: true }),
     ...(query
       ? {
@@ -64,18 +66,8 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
       : {}),
   }
 
-  const whereBaseSolution = {
-    categorySlug: category.slug,
-    ...(admin ? {} : { visible: true }),
-    ...(query
-      ? {
-          OR: [
-            { title: { contains: query, mode: "insensitive" } },
-            { short_text: { contains: query, mode: "insensitive" } },
-          ],
-        }
-      : {}),
-  }
+  const whereBaseProblem = baseWhere
+  const whereBaseSolution = baseWhere
 
   const items =
     itemType === "problem"
@@ -125,8 +117,12 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
   const categoryTitle = `${category.name} ${title}`
   const itemCountLabel =
     itemType === "problem"
-      ? t("problemsInCategory", { count: items.length })
-      : t("solutionsInCategory", { count: items.length })
+      ? isAllCategory
+        ? t("problemsAll", { count: items.length })
+        : t("problemsInCategory", { count: items.length })
+      : isAllCategory
+        ? t("solutionsAll", { count: items.length })
+        : t("solutionsInCategory", { count: items.length })
   const accent =
     itemType === "problem"
       ? "bg-orange-500/20 text-orange-500"
@@ -237,7 +233,14 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-lg mb-1">{localized.title}</h3>
+                  <div className="flex flex-wrap items-center gap-2 mb-1">
+                    <h3 className="font-semibold text-lg">{localized.title}</h3>
+                    {isAllCategory && (
+                      <Badge variant="secondary" className="text-xs font-normal">
+                        {tCategories(item.categorySlug) || item.categoryName}
+                      </Badge>
+                    )}
+                  </div>
                   <p className="text-sm text-muted-foreground line-clamp-2">{localized.short_text}</p>
                 </div>
 

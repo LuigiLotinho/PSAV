@@ -138,6 +138,8 @@
     "solutions": "გადაწყვეტილებები",
     "problemsInCategory": "ამ კატეგორიაში {count} პრობლემა",
     "solutionsInCategory": "ამ კატეგორიაში {count} გადაწყვეტილება",
+    "problemsAll": "სულ {count} პრობლემა",
+    "solutionsAll": "სულ {count} გადაწყვეტილება",
     "newProblem": "ახალი პრობლემა",
     "newSolution": "ახალი გადაწყვეტილება",
     "sortBy": "სორტირება:",

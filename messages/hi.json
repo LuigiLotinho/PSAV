@@ -138,6 +138,8 @@
     "solutions": "सॉल्यूशन्स",
     "problemsInCategory": "इस कैटेगरी में {count} प्रॉब्लम्स",
     "solutionsInCategory": "इस कैटेगरी में {count} सॉल्यूशन्स",
+    "problemsAll": "कुल {count} प्रॉब्लम्स",
+    "solutionsAll": "कुल {count} सॉल्यूशन्स",
     "newProblem": "नया प्रॉब्लम",
     "newSolution": "नया सॉल्यूशन",
     "sortBy": "सॉर्ट बाय:",
