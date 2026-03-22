@@ -17,6 +17,7 @@ import {
 import { Slider } from "@/components/ui/slider"
 import { Textarea } from "@/components/ui/textarea"
 import { createProblem } from "@/app/actions/problem-actions"
+import { Spinner } from "@/components/ui/spinner"
 import { toast } from "sonner"
 
 const SHORT_MAX = 300
@@ -111,7 +112,15 @@ export default function NewProblemPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      {isSubmitting && (
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 bg-background/80 backdrop-blur-sm">
+          <Spinner className="h-12 w-12 text-primary" />
+          <p className="max-w-md px-6 text-center text-lg text-foreground">
+            Thank you very much for your ideas and input. We are uploading it now. Take a deep breath until it is uploaded.
+          </p>
+        </div>
+      )}
       <header className="border-b bg-card">
         <div className="container mx-auto px-4 py-6">
           <Link href="/" className="text-xl font-semibold text-foreground">

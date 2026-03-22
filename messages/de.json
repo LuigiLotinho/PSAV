@@ -212,6 +212,7 @@
   "common": {
     "platformTitle": "Auroville Problem-Solution Platform",
     "breadcrumbNewProblem": "Neues Problem",
-    "breadcrumbNewSolution": "Neue Lösung"
+    "breadcrumbNewSolution": "Neue Lösung",
+    "uploadingMessage": "Vielen Dank für deine Ideen und deinen Input. Wir laden es jetzt hoch. Atme tief durch, bis es hochgeladen ist."
   }
 }

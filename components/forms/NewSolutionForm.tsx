@@ -18,6 +18,7 @@ import {
 import { Slider } from "@/components/ui/slider"
 import { Textarea } from "@/components/ui/textarea"
 import { createSolution } from "@/app/actions/solution-actions"
+import { Spinner } from "@/components/ui/spinner"
 import { toast } from "sonner"
 import { localePath, languageOptions, isLocale, type Locale } from "@/lib/i18n/locales"
 
@@ -135,7 +136,15 @@ export function NewSolutionForm({ locale }: NewSolutionFormProps) {
   const homeHref = localePath(locale, "/")
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      {isSubmitting && (
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 bg-background/80 backdrop-blur-sm">
+          <Spinner className="h-12 w-12 text-primary" />
+          <p className="max-w-md px-6 text-center text-lg text-foreground">
+            {tCommon("uploadingMessage")}
+          </p>
+        </div>
+      )}
       <header className="border-b bg-card">
         <div className="container mx-auto px-4 py-6">
           <Link href={homeHref} className="text-xl font-semibold text-foreground">

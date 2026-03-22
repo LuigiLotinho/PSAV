@@ -210,6 +210,7 @@
   "common": {
     "platformTitle": "अरोविल प्रॉब्लम-सॉल्यूशन प्लेटफॉर्म",
     "breadcrumbNewProblem": "नया प्रॉब्लम",
-    "breadcrumbNewSolution": "नया सॉल्यूशन"
+    "breadcrumbNewSolution": "नया सॉल्यूशन",
+    "uploadingMessage": "आपके विचारों और इनपुट के लिए बहुत धन्यवाद। हम अभी अपलोड कर रहे हैं। अपलोड होने तक गहरी साँस लें।"
   }
 }

@@ -210,6 +210,7 @@
   "common": {
     "platformTitle": "அவுரோவில் பிரச்சனை-தீர்வு தளம்",
     "breadcrumbNewProblem": "புதிய பிரச்சனை",
-    "breadcrumbNewSolution": "புதிய தீர்வு"
+    "breadcrumbNewSolution": "புதிய தீர்வு",
+    "uploadingMessage": "உங்கள் யோசனைகள் மற்றும் பங்களிப்புக்கு மிக்க நன்றி. இப்போது அனுப்புகிறோம். அனுப்பப்படும் வரை ஆழமாக சுவாசிக்கவும்."
   }
 }

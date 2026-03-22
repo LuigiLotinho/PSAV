@@ -210,6 +210,7 @@
   "common": {
     "platformTitle": "Plataforma Auroville Soluções e Problemas",
     "breadcrumbNewProblem": "Novo problema",
-    "breadcrumbNewSolution": "Nova solução"
+    "breadcrumbNewSolution": "Nova solução",
+    "uploadingMessage": "Muito obrigado pelas suas ideias e contribuições. Estamos a enviar agora. Respire fundo até estar concluído."
   }
 }
