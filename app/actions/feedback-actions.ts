@@ -2,6 +2,7 @@
 
 import { z } from "zod"
 import prisma from "@/lib/prisma"
+import { isFeedbackTableMissing } from "@/lib/feedback-db"
 import { isAdmin } from "@/lib/auth"
 import { getMergedAdminItemsPaginated } from "@/lib/admin-feed"
 import type { MergedAdminItem } from "@/lib/admin-feed"
@@ -23,12 +24,19 @@ export async function submitFeedback(
     emailOut = parsedEmail.data
   }
 
-  await prisma.feedback.create({
-    data: {
-      message: msg,
-      email: emailOut,
-    },
-  })
+  try {
+    await prisma.feedback.create({
+      data: {
+        message: msg,
+        email: emailOut,
+      },
+    })
+  } catch (e) {
+    if (isFeedbackTableMissing(e)) {
+      return { ok: false, error: "Feedback storage is not available yet. Please try again later." }
+    }
+    throw e
+  }
 
   return { ok: true }
 }
@@ -68,12 +76,18 @@ export async function loadAdminFeedbackPage(
   const admin = await isAdmin()
   if (!admin) return { ok: false, error: "Unauthorized" }
 
-  const items = await prisma.feedback.findMany({
-    orderBy: { createdAt: "desc" },
-    skip: offset,
-    take: limit,
-    select: { id: true, message: true, email: true, createdAt: true },
-  })
-
-  return { ok: true, items }
+  try {
+    const items = await prisma.feedback.findMany({
+      orderBy: { createdAt: "desc" },
+      skip: offset,
+      take: limit,
+      select: { id: true, message: true, email: true, createdAt: true },
+    })
+    return { ok: true, items }
+  } catch (e) {
+    if (isFeedbackTableMissing(e)) {
+      return { ok: true, items: [] }
+    }
+    throw e
+  }
 }

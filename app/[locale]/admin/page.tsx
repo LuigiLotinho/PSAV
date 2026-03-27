@@ -4,6 +4,7 @@ import { AdminPageClient } from "@/app/admin/admin-page-client"
 import { localePath, type Locale } from "@/lib/i18n/locales"
 import prisma from "@/lib/prisma"
 import { getMergedAdminItemsPaginated, getMergedAdminItemsCount } from "@/lib/admin-feed"
+import { isFeedbackTableMissing } from "@/lib/feedback-db"
 
 const POSTS_PAGE_SIZE = 5
 const FEEDBACK_PAGE_SIZE = 5
@@ -34,17 +35,26 @@ export default async function AdminPage({ params }: PageProps) {
     redirect(localePath(locale, "/login") + "?callbackUrl=" + encodeURIComponent(localePath(locale, "/admin")))
   }
 
-  const [mergedItems, itemsTotal, feedbackTotal, feedbackRows] = await Promise.all([
+  const [mergedItems, itemsTotal] = await Promise.all([
     getMergedAdminItemsPaginated(0, POSTS_PAGE_SIZE),
     getMergedAdminItemsCount(),
-    prisma.feedback.count(),
-    prisma.feedback.findMany({
-      orderBy: { createdAt: "desc" },
-      take: FEEDBACK_PAGE_SIZE,
-      skip: 0,
-      select: { id: true, message: true, email: true, createdAt: true },
-    }),
   ])
+
+  let feedbackTotal = 0
+  let feedbackRows: AdminFeedback[] = []
+  try {
+    ;[feedbackTotal, feedbackRows] = await Promise.all([
+      prisma.feedback.count(),
+      prisma.feedback.findMany({
+        orderBy: { createdAt: "desc" },
+        take: FEEDBACK_PAGE_SIZE,
+        skip: 0,
+        select: { id: true, message: true, email: true, createdAt: true },
+      }),
+    ])
+  } catch (e) {
+    if (!isFeedbackTableMissing(e)) throw e
+  }
 
   const items: AdminItem[] = mergedItems.map((m) => ({
     id: m.id,

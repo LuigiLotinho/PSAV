@@ -41,10 +41,13 @@ type PageProps = {
 
 export default async function HomePage({ params }: PageProps) {
   const { locale } = await params
+
   const t = await getTranslations({ locale, namespace: "home" })
   const tCategories = await getTranslations({ locale, namespace: "categories" })
   const tLang = await getTranslations({ locale, namespace: "language" })
+
   const admin = await isAdmin()
+
   const categories = await prisma.category.findMany({
     orderBy: { name: "asc" },
   })
@@ -83,32 +86,6 @@ export default async function HomePage({ params }: PageProps) {
     ...s,
     display: getLocalizedContent(s, locale),
   }))
-
-  // #region agent log
-  if (typeof fetch !== "undefined") {
-    const firstSlugs = categories.slice(0, 3).map((c) => c.slug)
-    const firstSrcs = solutionCategoryCards.slice(0, 3).map((c) => c.imageSrc)
-    fetch("http://127.0.0.1:7804/ingest/5ea61563-ec3a-43cd-a7d9-9a6eae2055cc", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "8d52fc" },
-      body: JSON.stringify({
-        sessionId: "8d52fc",
-        location: "app/[locale]/page.tsx:cards",
-        message: "HomePage built cards imageSrc",
-        data: {
-          categoriesLength: categories.length,
-          firstSlugs,
-          firstImageSrcs: firstSrcs,
-          fallbackImage,
-          firstCardKeys: solutionCategoryCards[0] ? Object.keys(solutionCategoryCards[0]) : [],
-          firstCardHasImageSrc: Boolean(solutionCategoryCards[0]?.imageSrc),
-        },
-        timestamp: Date.now(),
-        hypothesisId: "H2_H5",
-      }),
-    }).catch(() => {})
-  }
-  // #endregion
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden max-w-[100vw] w-full">
