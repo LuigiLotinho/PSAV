@@ -122,12 +122,20 @@ export default async function HomePage({ params }: PageProps) {
 
         <section className="space-y-4 md:space-y-4 text-center">
           <h2 className="text-xl md:text-3xl font-semibold text-foreground/90">{t("solutionsTitle")}</h2>
-          <ThreeDPhotoCarousel items={solutionCategoryCards} />
+          <ThreeDPhotoCarousel
+            items={solutionCategoryCards}
+            prevLabel={t("carouselPrev")}
+            nextLabel={t("carouselNext")}
+          />
         </section>
 
         <section className="space-y-4 md:space-y-4 text-center">
           <h2 className="text-xl md:text-3xl font-semibold text-foreground/90">{t("problemsTitle")}</h2>
-          <ThreeDPhotoCarousel items={problemCategoryCards} />
+          <ThreeDPhotoCarousel
+            items={problemCategoryCards}
+            prevLabel={t("carouselPrev")}
+            nextLabel={t("carouselNext")}
+          />
         </section>
 
         <LanguageSwitcher currentLocale={locale} label={tLang("label")} />

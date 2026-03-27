@@ -8,7 +8,9 @@
     "ideaButton": "პროექტის იდეა",
     "adminButton": "ადმინი",
     "noCategories": "ჯერ არ არის კატეგორიები.",
-    "newestSolutions": "ახალი გადაწყვეტილებები"
+    "newestSolutions": "ახალი გადაწყვეტილებები",
+    "carouselPrev": "მარცხნივ მობრუნება",
+    "carouselNext": "მარჯვნივ მობრუნება"
   },
   "language": { "label": "ენა" },
   "nav": { "home": "მთავარი", "problems": "პრობლემები", "solutions": "გადაწყვეტილებები" },
@@ -169,14 +171,33 @@
     "removed1": "ძალადობა ან პერსონალური შეტევა",
     "removed2": "მცირესაოფა ჯგუფების წინააღმდეგ შეტევა",
     "removed3": "წყევლითი ენა",
+    "removedContentLink": "ამჟამად უხილავი პოსტები",
     "closing": "ჩვენი მიზანია შექმნათ პატივისმცემელი გარემო."
+  },
+  "removedContent": {
+    "title": "უხილავი შინაარსი",
+    "back": "მთავარზე დაბრუნება",
+    "intro": "პრობლემები და გადაწყვეტილებები, რომლებიც პლატფორმაზე უხილავადაა მონიშნული.",
+    "problemsHeading": "პრობლემები",
+    "solutionsHeading": "გადაწყვეტილებები",
+    "empty": "უხილავი პოსტები არ არის.",
+    "adminOnlyNote": "პოსტის გახსნა შესაძლებელია მხოლოდ ადმინისტრატორისთვის."
   },
   "idea": {
     "title": "პროექტის იდეა",
     "back": "მთავარ გვერდზე დაბრუნება",
     "para1": "აუროვილის გადაწყვეტილებებისა და პრობლემების პლატფორმა დედიკაცობრივ ცვლილებებს ემსახურება.",
     "para2": "პლატფორმა ხელს უწყობს პასუხისმგებლობასა და შემოქმედებას.",
-    "para3": "ფოკუსი ყოველთვის უფრო გადაწყვეტილებებზეა, ვიდრე პრობლემებზე."
+    "para3": "ფოკუსი ყოველთვის უფრო გადაწყვეტილებებზეა, ვიდრე პრობლემებზე.",
+    "feedbackSectionTitle": "უკუკავშირი",
+    "feedbackIntro": "გაგვიზიარეთ თქვენი აზრი პროექტის შესახებ. ელფოსტა არასავალდებულოა პასუხისთვის.",
+    "feedbackLabel": "უკუკავშირი",
+    "feedbackPlaceholder": "შეიყვანეთ ტექსტი…",
+    "emailOptional": "ელფოსტა (არასავალდებულო)",
+    "submitFeedback": "გაგზავნა",
+    "submittingFeedback": "იგზავნება…",
+    "feedbackSuccess": "მადლობა!",
+    "feedbackError": "ვერ გაიგზავნა."
   },
   "auth": {
     "adminLogin": "ადმინის ავტორიზაცია",
@@ -195,6 +216,8 @@
     "solution": "გადაწყვეტილება",
     "hidden": "დამალული",
     "noPosts": "ჯერ არ არის პოსტები.",
+    "recentItems": "ბოლო პოსტები",
+    "reviewed": "შემოწმებული",
     "signOutSection": "გასვლა",
     "logout": "გასვლა",
     "addAdminSection": "ახალი ადმინის დამატება",
@@ -204,7 +227,20 @@
     "addError": "დამატების შეცდომა.",
     "genericError": "შეცდომა მოხდა.",
     "emailPlaceholder": "admin@example.com",
-    "passwordPlaceholder": "მინიმუმ 6 სიმბოლო"
+    "passwordPlaceholder": "მინიმუმ 6 სიმბოლო",
+    "feedbackSection": "უკუკავშირი",
+    "noFeedback": "უკუკავშირი ჯერ არ არის.",
+    "loadMorePosts": "შემდეგი 10 ჩატვირთვა",
+    "feedbackPrev": "უკან",
+    "feedbackNext": "შემდეგი",
+    "feedbackPageIndicator": "გვერდი {current} / {total}",
+    "feedbackRangeIndicator": "{start}–{end} / {total}",
+    "feedbackBigPrev": "უფრო ახალი",
+    "feedbackBigNext": "უფრო ძველი",
+    "feedbackBigPrevAria": "ერთი ნაბიჯი უფრო ახალი უკუკავშირისკენ",
+    "feedbackBigNextAria": "ერთი ნაბიჯი უფრო ძველი უკუკავშირისკენ",
+    "feedbackAllVisibleHint": "ყველა უკუკავშირი ნაჩვენებია. ხუთზე მეტი ჩანაწერისას ისრებით გადაადგილდით.",
+    "postsAllVisibleHint": "ბოლო პოსტები აქაა ჩამოთვლილი. ხუთზე მეტი ჩანაწერისას ისრებით გადაადგილდით."
   },
   "dialoge": { "title": "დიალოგში ჩართვა" },
   "common": {

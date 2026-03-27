@@ -8,7 +8,9 @@
     "ideaButton": "Idee des Projekts",
     "adminButton": "Admin",
     "noCategories": "Noch keine Kategorien.",
-    "newestSolutions": "Neueste Lösungen"
+    "newestSolutions": "Neueste Lösungen",
+    "carouselPrev": "Nach links",
+    "carouselNext": "Nach rechts"
   },
   "language": { "label": "Sprache" },
   "nav": { "home": "Start", "problems": "Probleme", "solutions": "Lösungen" },
@@ -169,14 +171,33 @@
     "removed1": "Beleidigungen oder persönliche Angriffe",
     "removed2": "Angriffe auf Minderheiten oder vulnerable Gruppen",
     "removed3": "Respektlose oder abwertende Sprache",
+    "removedContentLink": "Aktuell nicht sichtbare Beiträge",
     "closing": "Unser gemeinsames Anliegen ist ein respektvoller Raum, in dem Ideen geäußert und positive Veränderung möglich werden kann."
+  },
+  "removedContent": {
+    "title": "Nicht sichtbare Beiträge",
+    "back": "Zurück zur Startseite",
+    "intro": "Probleme und Lösungen, die derzeit als nicht sichtbar markiert sind.",
+    "problemsHeading": "Probleme",
+    "solutionsHeading": "Lösungen",
+    "empty": "Es gibt derzeit keine nicht sichtbaren Beiträge.",
+    "adminOnlyNote": "Beiträge öffnen ist nur als Admin möglich."
   },
   "idea": {
     "title": "Idee des Projekts",
     "back": "Zurück zur Startseite",
     "para1": "Die Auroville Solutions and Problems Platform ist ein Raum für positive Veränderung.",
     "para2": "Die Plattform fördert eine Kultur der Verantwortung und Kreativität.",
-    "para3": "Der Fokus liegt stets mehr auf Lösungen als auf Problemen."
+    "para3": "Der Fokus liegt stets mehr auf Lösungen als auf Problemen.",
+    "feedbackSectionTitle": "Feedback",
+    "feedbackIntro": "Teile deine Gedanken zum Projekt. Optional kannst du eine E-Mail angeben, falls du eine Antwort wünschst.",
+    "feedbackLabel": "Dein Feedback",
+    "feedbackPlaceholder": "Schreibe hier deine Nachricht…",
+    "emailOptional": "E-Mail (optional)",
+    "submitFeedback": "Feedback senden",
+    "submittingFeedback": "Wird gesendet…",
+    "feedbackSuccess": "Vielen Dank für dein Feedback!",
+    "feedbackError": "Feedback konnte nicht gesendet werden."
   },
   "auth": {
     "adminLogin": "Admin-Login",
@@ -206,7 +227,20 @@
     "addError": "Fehler beim Hinzufügen",
     "genericError": "Ein Fehler ist aufgetreten.",
     "emailPlaceholder": "admin@example.com",
-    "passwordPlaceholder": "Mindestens 6 Zeichen"
+    "passwordPlaceholder": "Mindestens 6 Zeichen",
+    "feedbackSection": "Feedback",
+    "noFeedback": "Noch kein Feedback.",
+    "loadMorePosts": "Nächste 10 laden",
+    "feedbackPrev": "Zurück",
+    "feedbackNext": "Weiter",
+    "feedbackPageIndicator": "Seite {current} von {total}",
+    "feedbackRangeIndicator": "{start}–{end} von {total}",
+    "feedbackBigPrev": "Neuere Einträge",
+    "feedbackBigNext": "Ältere Einträge",
+    "feedbackBigPrevAria": "Eine Kachel zu neueren Feedbacks",
+    "feedbackBigNextAria": "Eine Kachel zu älteren Feedbacks",
+    "feedbackAllVisibleHint": "Alle Feedbacks sind hier sichtbar. Blättern mit den Pfeilen ist möglich, sobald mehr als fünf Einträge vorliegen.",
+    "postsAllVisibleHint": "Alle neuesten Beiträge sind hier sichtbar. Blättern mit den Pfeilen ist möglich, sobald mehr als fünf Einträge vorliegen."
   },
   "dialoge": { "title": "Am Dialog teilnehmen" },
   "common": {

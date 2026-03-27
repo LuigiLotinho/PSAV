@@ -8,7 +8,9 @@
     "ideaButton": "Ideia do projeto",
     "adminButton": "Admin",
     "noCategories": "Ainda não há categorias.",
-    "newestSolutions": "Soluções mais recentes"
+    "newestSolutions": "Soluções mais recentes",
+    "carouselPrev": "Virar à esquerda",
+    "carouselNext": "Virar à direita"
   },
   "language": { "label": "Idioma" },
   "nav": { "home": "Início", "problems": "Problemas", "solutions": "Soluções" },
@@ -169,14 +171,33 @@
     "removed1": "Insultos ou ataques pessoais",
     "removed2": "Ataques a minorias",
     "removed3": "Linguagem desrespeitosa",
+    "removedContentLink": "Publicações atualmente não visíveis",
     "closing": "Nossa intenção é criar um ambiente respeitoso."
+  },
+  "removedContent": {
+    "title": "Conteúdo não visível",
+    "back": "Voltar ao início",
+    "intro": "Problemas e soluções marcados como não visíveis na plataforma.",
+    "problemsHeading": "Problemas",
+    "solutionsHeading": "Soluções",
+    "empty": "Não há publicações ocultas no momento.",
+    "adminOnlyNote": "Abrir uma publicação só é possível como administrador."
   },
   "idea": {
     "title": "Ideia do projeto",
     "back": "Voltar ao início",
     "para1": "A plataforma Auroville de Soluções e Problemas é dedicada à mudança positiva.",
     "para2": "A plataforma incentiva uma cultura de responsabilidade e criatividade.",
-    "para3": "O foco está sempre mais nas soluções do que nos problemas."
+    "para3": "O foco está sempre mais nas soluções do que nos problemas.",
+    "feedbackSectionTitle": "Feedback",
+    "feedbackIntro": "Partilhe a sua opinião sobre o projeto. Opcionalmente deixe o e-mail para uma resposta.",
+    "feedbackLabel": "O seu feedback",
+    "feedbackPlaceholder": "Escreva a sua mensagem aqui…",
+    "emailOptional": "E-mail (opcional)",
+    "submitFeedback": "Enviar feedback",
+    "submittingFeedback": "A enviar…",
+    "feedbackSuccess": "Obrigado pelo seu feedback!",
+    "feedbackError": "Não foi possível enviar o feedback."
   },
   "auth": {
     "adminLogin": "Login Admin",
@@ -195,6 +216,8 @@
     "solution": "Solução",
     "hidden": "Oculto",
     "noPosts": "Ainda não há posts.",
+    "recentItems": "Publicações recentes",
+    "reviewed": "Visto",
     "signOutSection": "Sair",
     "logout": "Sair",
     "addAdminSection": "Adicionar novo admin",
@@ -204,7 +227,20 @@
     "addError": "Erro ao adicionar.",
     "genericError": "Ocorreu um erro.",
     "emailPlaceholder": "admin@example.com",
-    "passwordPlaceholder": "Pelo menos 6 caracteres"
+    "passwordPlaceholder": "Pelo menos 6 caracteres",
+    "feedbackSection": "Feedback",
+    "noFeedback": "Ainda sem feedback.",
+    "loadMorePosts": "Carregar próximos 10",
+    "feedbackPrev": "Anterior",
+    "feedbackNext": "Seguinte",
+    "feedbackPageIndicator": "Página {current} de {total}",
+    "feedbackRangeIndicator": "{start}–{end} de {total}",
+    "feedbackBigPrev": "Mais recentes",
+    "feedbackBigNext": "Mais antigos",
+    "feedbackBigPrevAria": "Um passo para feedback mais recente",
+    "feedbackBigNextAria": "Um passo para feedback mais antigo",
+    "feedbackAllVisibleHint": "Todo o feedback está visível aqui. Use as setas quando houver mais de cinco entradas.",
+    "postsAllVisibleHint": "Todas as publicações recentes estão listadas aqui. Use as setas quando houver mais de cinco entradas."
   },
   "dialoge": { "title": "Participar do diálogo" },
   "common": {

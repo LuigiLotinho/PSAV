@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
 import { localePath, type Locale } from "@/lib/i18n/locales"
+import { IdeaFeedbackForm } from "@/components/idea-feedback-form"
 
 type PageProps = {
   params: Promise<{ locale: Locale }>
@@ -27,6 +28,8 @@ export default async function IdeaOfTheProjectPage({ params }: PageProps) {
           <p>{t("para2")}</p>
           <p>{t("para3")}</p>
         </div>
+
+        <IdeaFeedbackForm />
       </main>
     </div>
   )

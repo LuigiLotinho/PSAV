@@ -8,7 +8,9 @@
     "ideaButton": "Idea of the project",
     "adminButton": "Admin",
     "noCategories": "No categories yet.",
-    "newestSolutions": "Newest Solutions"
+    "newestSolutions": "Newest Solutions",
+    "carouselPrev": "Turn left",
+    "carouselNext": "Turn right"
   },
   "language": {
     "label": "Language"
@@ -175,14 +177,33 @@
     "removed1": "Insults or personal attacks",
     "removed2": "Attacks toward minorities or vulnerable members of society",
     "removed3": "Disrespectful or demeaning language",
+    "removedContentLink": "Posts currently marked as not visible",
     "closing": "Our shared intention is to create a respectful environment where ideas can be expressed and positive change becomes possible."
+  },
+  "removedContent": {
+    "title": "Hidden posts",
+    "back": "Back to home",
+    "intro": "Problems and solutions that are currently marked as not visible on the platform.",
+    "problemsHeading": "Problems",
+    "solutionsHeading": "Solutions",
+    "empty": "There are no hidden posts at the moment.",
+    "adminOnlyNote": "Opening a post is only possible when logged in as an admin."
   },
   "idea": {
     "title": "Idea of the project",
     "back": "Back to home",
     "para1": "The Auroville Solutions and Problems Platform is a space dedicated to positive change. It invites individuals to openly share ideas, challenges, and observations from daily life in Auroville not as complaints, but as starting points for growth. Every problem carries the seed of a solution, and by expressing it clearly and constructively, it can become an inspiration for others.",
     "para2": "The platform encourages a culture of responsibility and creativity. Individuals can propose concrete solutions, improvements, or experiments. At the same time, working committees, units, and services can use these insights as valuable feedback and as a source of inspiration for future projects and decisions.",
-    "para3": "The focus is always more on solutions than on problems. The intention is not to criticize, but to collaborate — transforming difficulties into opportunities, and ideas into action. In this way, the platform becomes a living tool for collective intelligence, transparency, and continuous evolution in Auroville."
+    "para3": "The focus is always more on solutions than on problems. The intention is not to criticize, but to collaborate — transforming difficulties into opportunities, and ideas into action. In this way, the platform becomes a living tool for collective intelligence, transparency, and continuous evolution in Auroville.",
+    "feedbackSectionTitle": "Feedback",
+    "feedbackIntro": "Share your thoughts about the project. You can optionally leave your email if you would like a reply.",
+    "feedbackLabel": "Your feedback",
+    "feedbackPlaceholder": "Write your message here…",
+    "emailOptional": "Email (optional)",
+    "submitFeedback": "Send feedback",
+    "submittingFeedback": "Sending…",
+    "feedbackSuccess": "Thank you for your feedback!",
+    "feedbackError": "Could not send feedback."
   },
   "auth": {
     "adminLogin": "Admin Login",
@@ -212,7 +233,20 @@
     "addError": "Error adding admin.",
     "genericError": "An error occurred.",
     "emailPlaceholder": "admin@example.com",
-    "passwordPlaceholder": "At least 6 characters"
+    "passwordPlaceholder": "At least 6 characters",
+    "feedbackSection": "Feedback",
+    "noFeedback": "No feedback yet.",
+    "loadMorePosts": "Load next 10",
+    "feedbackPrev": "Previous",
+    "feedbackNext": "Next",
+    "feedbackPageIndicator": "Page {current} of {total}",
+    "feedbackRangeIndicator": "{start}–{end} of {total}",
+    "feedbackBigPrev": "Newer",
+    "feedbackBigNext": "Older",
+    "feedbackBigPrevAria": "Show newer feedback, one step",
+    "feedbackBigNextAria": "Show older feedback, one step",
+    "feedbackAllVisibleHint": "All feedback is shown here. Use the arrows when you have more than five entries to scroll through them.",
+    "postsAllVisibleHint": "All recent posts are listed here. Use the arrows when you have more than five entries to scroll through them."
   },
   "dialoge": {
     "title": "Join the dialogue"

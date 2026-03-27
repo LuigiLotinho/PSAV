@@ -8,7 +8,9 @@
     "ideaButton": "プロジェクトの趣旨",
     "adminButton": "管理者",
     "noCategories": "カテゴリはまだありません。",
-    "newestSolutions": "最新のソリューション"
+    "newestSolutions": "最新のソリューション",
+    "carouselPrev": "左に回す",
+    "carouselNext": "右に回す"
   },
   "language": { "label": "言語" },
   "nav": { "home": "ホーム", "problems": "問題", "solutions": "ソリューション" },
@@ -169,14 +171,33 @@
     "removed1": "侮辱や個人攻撃",
     "removed2": "少数派への攻撃",
     "removed3": "不敬意な言葉",
+    "removedContentLink": "現在非表示の投稿",
     "closing": "アイデアが表現され、ポジティブな変化が可能になる環境を作ることが目的です。"
+  },
+  "removedContent": {
+    "title": "非表示の投稿",
+    "back": "ホームに戻る",
+    "intro": "現在プラットフォームで非表示になっている問題とソリューションです。",
+    "problemsHeading": "問題",
+    "solutionsHeading": "ソリューション",
+    "empty": "非表示の投稿はありません。",
+    "adminOnlyNote": "投稿を開けるのは管理者のみです。"
   },
   "idea": {
     "title": "プロジェクトの趣旨",
     "back": "ホームに戻る",
     "para1": "オーロヴィル ソリューション＆問題プラットフォームはポジティブな変化に捧げられています。",
     "para2": "プラットフォームは責任と創造性の文化を奨励しています。",
-    "para3": "焦点は常に問題よりソリューションにあります。"
+    "para3": "焦点は常に問題よりソリューションにあります。",
+    "feedbackSectionTitle": "フィードバック",
+    "feedbackIntro": "プロジェクトについてのご意見をお聞かせください。返信を希望する場合はメールをご記入ください（任意）。",
+    "feedbackLabel": "フィードバック",
+    "feedbackPlaceholder": "メッセージを入力…",
+    "emailOptional": "メール（任意）",
+    "submitFeedback": "送信",
+    "submittingFeedback": "送信中…",
+    "feedbackSuccess": "ありがとうございます！",
+    "feedbackError": "送信に失敗しました。"
   },
   "auth": {
     "adminLogin": "管理者ログイン",
@@ -195,6 +216,8 @@
     "solution": "ソリューション",
     "hidden": "非表示",
     "noPosts": "投稿はまだありません。",
+    "recentItems": "最近の投稿",
+    "reviewed": "確認済み",
     "signOutSection": "サインアウト",
     "logout": "ログアウト",
     "addAdminSection": "新しい管理者を追加",
@@ -204,7 +227,20 @@
     "addError": "追加エラー",
     "genericError": "エラーが発生しました。",
     "emailPlaceholder": "admin@example.com",
-    "passwordPlaceholder": "6文字以上"
+    "passwordPlaceholder": "6文字以上",
+    "feedbackSection": "フィードバック",
+    "noFeedback": "フィードバックはまだありません。",
+    "loadMorePosts": "次の10件を読み込む",
+    "feedbackPrev": "前へ",
+    "feedbackNext": "次へ",
+    "feedbackPageIndicator": "{total}ページ中{current}ページ目",
+    "feedbackRangeIndicator": "全{total}件中 {start}–{end} 件目",
+    "feedbackBigPrev": "新しい方へ",
+    "feedbackBigNext": "古い方へ",
+    "feedbackBigPrevAria": "新しいフィードバックへ1件分",
+    "feedbackBigNextAria": "古いフィードバックへ1件分",
+    "feedbackAllVisibleHint": "フィードバックはすべて表示されています。6件以上で矢印から送れます。",
+    "postsAllVisibleHint": "最近の投稿はすべてここに表示されています。6件以上で矢印から送れます。"
   },
   "dialoge": { "title": "ダイアログに参加" },
   "common": {

@@ -1,8 +1,9 @@
 "use client"
 
 import Link from "next/link"
-import { useMemo, useRef } from "react"
-import { motion, useMotionValue } from "framer-motion"
+import { useCallback, useMemo, useRef } from "react"
+import { animate, motion, useMotionValue } from "framer-motion"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
 
 type CarouselItem = {
@@ -20,6 +21,9 @@ type ThreeDPhotoCarouselProps = {
   cardWidth?: number
   cardHeight?: number
   className?: string
+  /** Labels for the arrow buttons (e.g. from next-intl). */
+  prevLabel?: string
+  nextLabel?: string
 }
 
 export function ThreeDPhotoCarousel({
@@ -28,6 +32,8 @@ export function ThreeDPhotoCarousel({
   cardWidth: propCardWidth,
   cardHeight: propCardHeight,
   className = "",
+  prevLabel = "Turn left",
+  nextLabel = "Turn right",
 }: ThreeDPhotoCarouselProps) {
   const isMobile = useIsMobile()
   
@@ -55,6 +61,15 @@ export function ThreeDPhotoCarousel({
   const didDragRef = useRef(false)
   const step = useMemo(() => (items.length ? 360 / items.length : 0), [items.length])
   const DRAG_THRESHOLD_PX = 12
+
+  const nudgeRotation = useCallback(
+    (direction: 1 | -1) => {
+      if (step === 0) return
+      const target = rotation.get() + direction * step
+      void animate(rotation, target, { type: "spring", stiffness: 90, damping: 20, mass: 0.8 })
+    },
+    [rotation, step]
+  )
 
   if (items.length === 0) {
     return (
@@ -209,6 +224,32 @@ export function ThreeDPhotoCarousel({
             )
           })}
         </motion.div>
+      </div>
+      <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-3 px-2 pt-3 sm:gap-6">
+        <button
+          type="button"
+          onClick={() => nudgeRotation(-1)}
+          style={{
+            width: cardWidth,
+            minHeight: Math.max(28, Math.round(Math.min(cardHeight, 88) / 2)),
+          }}
+          className="inline-flex shrink-0 items-center justify-center rounded-xl border-2 border-border bg-muted/50 text-foreground shadow-sm transition-colors hover:bg-muted"
+          aria-label={prevLabel}
+        >
+          <ChevronLeft className="h-4 w-4" strokeWidth={2} aria-hidden />
+        </button>
+        <button
+          type="button"
+          onClick={() => nudgeRotation(1)}
+          style={{
+            width: cardWidth,
+            minHeight: Math.max(28, Math.round(Math.min(cardHeight, 88) / 2)),
+          }}
+          className="inline-flex shrink-0 items-center justify-center rounded-xl border-2 border-border bg-muted/50 text-foreground shadow-sm transition-colors hover:bg-muted"
+          aria-label={nextLabel}
+        >
+          <ChevronRight className="h-4 w-4" strokeWidth={2} aria-hidden />
+        </button>
       </div>
     </div>
   )

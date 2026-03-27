@@ -8,7 +8,9 @@
     "ideaButton": "Idée du projet",
     "adminButton": "Admin",
     "noCategories": "Aucune catégorie pour l'instant.",
-    "newestSolutions": "Solutions les plus récentes"
+    "newestSolutions": "Solutions les plus récentes",
+    "carouselPrev": "Tourner à gauche",
+    "carouselNext": "Tourner à droite"
   },
   "language": { "label": "Langue" },
   "nav": { "home": "Accueil", "problems": "Problèmes", "solutions": "Solutions" },
@@ -169,14 +171,33 @@
     "removed1": "Insultes ou attaques personnelles",
     "removed2": "Attaques envers les minorités",
     "removed3": "Langage irrespectueux",
+    "removedContentLink": "Publications actuellement non visibles",
     "closing": "Notre intention est de créer un environnement respectueux."
+  },
+  "removedContent": {
+    "title": "Contenu non visible",
+    "back": "Retour à l'accueil",
+    "intro": "Problèmes et solutions actuellement marqués comme non visibles.",
+    "problemsHeading": "Problèmes",
+    "solutionsHeading": "Solutions",
+    "empty": "Aucun contenu non visible pour le moment.",
+    "adminOnlyNote": "L'ouverture d'une publication n'est possible qu'en tant qu'administrateur."
   },
   "idea": {
     "title": "Idée du projet",
     "back": "Retour à l'accueil",
     "para1": "La plateforme Auroville Solutions et Problèmes est dédiée au changement positif.",
     "para2": "La plateforme encourage une culture de responsabilité et de créativité.",
-    "para3": "Le focus est toujours plus sur les solutions que sur les problèmes."
+    "para3": "Le focus est toujours plus sur les solutions que sur les problèmes.",
+    "feedbackSectionTitle": "Feedback",
+    "feedbackIntro": "Partagez votre avis sur le projet. Vous pouvez optionnellement laisser un e-mail pour une réponse.",
+    "feedbackLabel": "Votre retour",
+    "feedbackPlaceholder": "Écrivez votre message ici…",
+    "emailOptional": "E-mail (optionnel)",
+    "submitFeedback": "Envoyer",
+    "submittingFeedback": "Envoi…",
+    "feedbackSuccess": "Merci pour votre retour !",
+    "feedbackError": "Impossible d'envoyer le retour."
   },
   "auth": {
     "adminLogin": "Connexion Admin",
@@ -206,7 +227,20 @@
     "addError": "Erreur lors de l'ajout.",
     "genericError": "Une erreur s'est produite.",
     "emailPlaceholder": "admin@example.com",
-    "passwordPlaceholder": "Au moins 6 caractères"
+    "passwordPlaceholder": "Au moins 6 caractères",
+    "feedbackSection": "Feedback",
+    "noFeedback": "Aucun feedback pour l'instant.",
+    "loadMorePosts": "Charger les 10 suivants",
+    "feedbackPrev": "Précédent",
+    "feedbackNext": "Suivant",
+    "feedbackPageIndicator": "Page {current} sur {total}",
+    "feedbackRangeIndicator": "{start}–{end} sur {total}",
+    "feedbackBigPrev": "Plus récents",
+    "feedbackBigNext": "Plus anciens",
+    "feedbackBigPrevAria": "Reculer d’un feedback",
+    "feedbackBigNextAria": "Avancer d’un feedback",
+    "feedbackAllVisibleHint": "Tous les retours sont affichés ici. Les flèches servent dès qu’il y a plus de cinq entrées.",
+    "postsAllVisibleHint": "Toutes les publications récentes sont listées ici. Les flèches servent dès qu’il y a plus de cinq entrées."
   },
   "dialoge": { "title": "Rejoindre le dialogue" },
   "common": {

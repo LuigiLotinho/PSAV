@@ -8,7 +8,9 @@
     "ideaButton": "திட்ட யோசனை",
     "adminButton": "நிர்வாகி",
     "noCategories": "இன்னும் வகைகள் இல்லை.",
-    "newestSolutions": "மிகவும் சமீபத்திய தீர்வுகள்"
+    "newestSolutions": "மிகவும் சமீபத்திய தீர்வுகள்",
+    "carouselPrev": "இடதுபுறம் சுழற்று",
+    "carouselNext": "வலதுபுறம் சுழற்று"
   },
   "language": { "label": "மொழி" },
   "nav": { "home": "முகப்பு", "problems": "பிரச்சனைகள்", "solutions": "தீர்வுகள்" },
@@ -169,14 +171,33 @@
     "removed1": "இழிவுகள் அல்லது தனிப்பட்ட தாக்குதல்கள்",
     "removed2": "சிறுபான்மையினர் மீதான தாக்குதல்கள்",
     "removed3": "மரியாதையற்ற மொழி",
+    "removedContentLink": "தற்போது மறைக்கப்பட்ட இடுகைகள்",
     "closing": "யோசனைகள் வெளிப்படுத்தப்படும் மரியாதையான சூழலை உருவாக்குவதே எங்கள் நோக்கம்."
+  },
+  "removedContent": {
+    "title": "மறைக்கப்பட்ட உள்ளடக்கம்",
+    "back": "முகப்பிற்கு",
+    "intro": "தளத்தில் தற்போது மறைக்கப்பட்டு குறிக்கப்பட்டுள்ள பிரச்சனைகளும் தீர்வுகளும்.",
+    "problemsHeading": "பிரச்சனைகள்",
+    "solutionsHeading": "தீர்வுகள்",
+    "empty": "மறைக்கப்பட்ட இடுகைகள் இல்லை.",
+    "adminOnlyNote": "இடுகையைத் திறப்பது நிர்வாகியாக மட்டுமே சாத்தியம்."
   },
   "idea": {
     "title": "திட்ட யோசனை",
     "back": "முகப்பிற்கு திரும்பு",
     "para1": "அவுரோவில் தீர்வுகள் மற்றும் பிரச்சனைகள் தளம் நேர்மறை மாற்றத்திற்காக அர்ப்பணிக்கப்பட்டுள்ளது.",
     "para2": "திட்டம் பொறுப்பு மற்றும் படைப்பாற்றலின் கலாச்சாரத்தை ஊக்குவிக்கிறது.",
-    "para3": "எப்போதும் பிரச்சனைகளை விட தீர்வுகளில் அதிக கவனம்."
+    "para3": "எப்போதும் பிரச்சனைகளை விட தீர்வுகளில் அதிக கவனம்.",
+    "feedbackSectionTitle": "கருத்து",
+    "feedbackIntro": "திட்டம் பற்றி உங்கள் கருத்தை பகிரவும். பதில் வேண்டுமெனில் மின்னஞ்சல் (விருப்பம்).",
+    "feedbackLabel": "உங்கள் கருத்து",
+    "feedbackPlaceholder": "உங்கள் செய்தியை எழுதவும்…",
+    "emailOptional": "மின்னஞ்சல் (விருப்பம்)",
+    "submitFeedback": "அனுப்பு",
+    "submittingFeedback": "அனுப்புகிறது…",
+    "feedbackSuccess": "நன்றி!",
+    "feedbackError": "அனுப்ப முடியவில்லை."
   },
   "auth": {
     "adminLogin": "நிர்வாகி உள்நுழைவு",
@@ -195,6 +216,8 @@
     "solution": "தீர்வு",
     "hidden": "மறைக்கப்பட்டது",
     "noPosts": "இன்னும் இடுகைகள் இல்லை.",
+    "recentItems": "சமீபத்திய இடுகைகள்",
+    "reviewed": "பரிசோதனை",
     "signOutSection": "வெளியேறு",
     "logout": "வெளியேறு",
     "addAdminSection": "புதிய நிர்வாகியை சேர்",
@@ -204,7 +227,20 @@
     "addError": "சேர்க்கும்போது பிழை.",
     "genericError": "பிழை ஏற்பட்டது.",
     "emailPlaceholder": "admin@example.com",
-    "passwordPlaceholder": "குறைந்தது 6 எழுத்துகள்"
+    "passwordPlaceholder": "குறைந்தது 6 எழுத்துகள்",
+    "feedbackSection": "கருத்து",
+    "noFeedback": "கருத்து இல்லை.",
+    "loadMorePosts": "அடுத்த 10 ஏற்று",
+    "feedbackPrev": "முந்தைய",
+    "feedbackNext": "அடுத்த",
+    "feedbackPageIndicator": "பக்கம் {current} / {total}",
+    "feedbackRangeIndicator": "{total} இல் {start}–{end}",
+    "feedbackBigPrev": "புதியவை",
+    "feedbackBigNext": "பழையவை",
+    "feedbackBigPrevAria": "ஒரு படி புதிய கருத்து",
+    "feedbackBigNextAria": "ஒரு படி பழைய கருத்து",
+    "feedbackAllVisibleHint": "அனைத்து கருத்துகளும் இங்கே. ஐந்துக்கு மேல் இருந்தால் அம்புகள் செயல்படும்.",
+    "postsAllVisibleHint": "சமீபத்திய இடுகைகள் அனைத்தும் இங்கே. ஐந்துக்கு மேல் இருந்தால் அம்புகள் செயல்படும்."
   },
   "dialoge": { "title": "உரையாடலில் இணை" },
   "common": {

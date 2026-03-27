@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { defaultLocale } from "@/lib/i18n/locales"
 
 export default function GuidelinesPage() {
   return (
@@ -68,6 +69,14 @@ export default function GuidelinesPage() {
               <li>Attacks toward minorities or vulnerable members of society</li>
               <li>Disrespectful or demeaning language</li>
             </ul>
+            <p className="pt-3 text-sm">
+              <Link
+                href={`/${defaultLocale}/removed-content`}
+                className="text-primary underline underline-offset-2 hover:text-primary/90"
+              >
+                Posts currently marked as not visible
+              </Link>
+            </p>
           </div>
 
           <p className="text-foreground/90 pt-4">

@@ -53,6 +53,14 @@ export default async function GuidelinesPage({ params }: PageProps) {
               <li>{t("removed2")}</li>
               <li>{t("removed3")}</li>
             </ul>
+            <p className="pt-3 text-sm">
+              <Link
+                href={localePath(locale, "/removed-content")}
+                className="text-primary underline underline-offset-2 hover:text-primary/90"
+              >
+                {t("removedContentLink")}
+              </Link>
+            </p>
           </div>
 
           <p className="text-foreground/90 pt-4">{t("closing")}</p>

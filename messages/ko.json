@@ -8,7 +8,9 @@
     "ideaButton": "프로젝트 아이디어",
     "adminButton": "관리자",
     "noCategories": "아직 카테고리가 없습니다.",
-    "newestSolutions": "최신 솔루션"
+    "newestSolutions": "최신 솔루션",
+    "carouselPrev": "왼쪽으로 돌리기",
+    "carouselNext": "오른쪽으로 돌리기"
   },
   "language": { "label": "언어" },
   "nav": { "home": "홈", "problems": "문제", "solutions": "솔루션" },
@@ -169,14 +171,33 @@
     "removed1": "모욕 또는 개인적 공격",
     "removed2": "소수에 대한 공격",
     "removed3": "무례한 언어",
+    "removedContentLink": "현재 비공개로 표시된 게시물",
     "closing": "아이디어가 표현되고 긍정적 변화가 가능한 존중하는 환경을 만드는 것이 목표입니다."
+  },
+  "removedContent": {
+    "title": "비공개 게시물",
+    "back": "홈으로",
+    "intro": "플랫폼에서 비공개로 표시된 문제와 솔루션입니다.",
+    "problemsHeading": "문제",
+    "solutionsHeading": "솔루션",
+    "empty": "비공개 게시물이 없습니다.",
+    "adminOnlyNote": "게시물 열람은 관리자만 가능합니다."
   },
   "idea": {
     "title": "프로젝트 아이디어",
     "back": "홈으로 돌아가기",
     "para1": "오로빌 솔루션 및 문제 플랫폼은 긍정적 변화에 헌신합니다.",
     "para2": "플랫폼은 책임과 창의성의 문화를 장려합니다.",
-    "para3": "초점은 항상 문제보다 솔루션에 더 있습니다."
+    "para3": "초점은 항상 문제보다 솔루션에 더 있습니다.",
+    "feedbackSectionTitle": "피드백",
+    "feedbackIntro": "프로젝트에 대한 의견을 남겨 주세요. 답장을 원하시면 이메일을 적어 주세요(선택).",
+    "feedbackLabel": "피드백",
+    "feedbackPlaceholder": "메시지를 입력하세요…",
+    "emailOptional": "이메일(선택)",
+    "submitFeedback": "보내기",
+    "submittingFeedback": "전송 중…",
+    "feedbackSuccess": "감사합니다!",
+    "feedbackError": "전송하지 못했습니다."
   },
   "auth": {
     "adminLogin": "관리자 로그인",
@@ -195,6 +216,8 @@
     "solution": "솔루션",
     "hidden": "숨김",
     "noPosts": "아직 게시물이 없습니다.",
+    "recentItems": "최근 게시물",
+    "reviewed": "검토됨",
     "signOutSection": "로그아웃",
     "logout": "로그아웃",
     "addAdminSection": "새 관리자 추가",
@@ -204,7 +227,20 @@
     "addError": "추가 오류.",
     "genericError": "오류가 발생했습니다.",
     "emailPlaceholder": "admin@example.com",
-    "passwordPlaceholder": "6자 이상"
+    "passwordPlaceholder": "6자 이상",
+    "feedbackSection": "피드백",
+    "noFeedback": "아직 피드백이 없습니다.",
+    "loadMorePosts": "다음 10개 불러오기",
+    "feedbackPrev": "이전",
+    "feedbackNext": "다음",
+    "feedbackPageIndicator": "{total}페이지 중 {current}페이지",
+    "feedbackRangeIndicator": "전체 {total}개 중 {start}–{end}",
+    "feedbackBigPrev": "더 최근",
+    "feedbackBigNext": "더 이전",
+    "feedbackBigPrevAria": "최근 피드백으로 한 칸",
+    "feedbackBigNextAria": "이전 피드백으로 한 칸",
+    "feedbackAllVisibleHint": "피드백이 모두 여기에 보입니다. 6개 이상일 때 화살표로 넘길 수 있습니다.",
+    "postsAllVisibleHint": "최근 게시물이 모두 여기에 나열됩니다. 6개 이상일 때 화살표로 넘길 수 있습니다."
   },
   "dialoge": { "title": "대화에 참여" },
   "common": {

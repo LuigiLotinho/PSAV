@@ -8,7 +8,9 @@
     "ideaButton": "Idea del proyecto",
     "adminButton": "Admin",
     "noCategories": "Aún no hay categorías.",
-    "newestSolutions": "Soluciones más recientes"
+    "newestSolutions": "Soluciones más recientes",
+    "carouselPrev": "Girar a la izquierda",
+    "carouselNext": "Girar a la derecha"
   },
   "language": { "label": "Idioma" },
   "nav": { "home": "Inicio", "problems": "Problemas", "solutions": "Soluciones" },
@@ -169,14 +171,33 @@
     "removed1": "Insultos o ataques personales",
     "removed2": "Ataques hacia minorías",
     "removed3": "Lenguaje irrespetuoso",
+    "removedContentLink": "Publicaciones no visibles actualmente",
     "closing": "Nuestra intención es crear un entorno respetuoso."
+  },
+  "removedContent": {
+    "title": "Contenido no visible",
+    "back": "Volver al inicio",
+    "intro": "Problemas y soluciones marcados como no visibles en la plataforma.",
+    "problemsHeading": "Problemas",
+    "solutionsHeading": "Soluciones",
+    "empty": "No hay publicaciones ocultas en este momento.",
+    "adminOnlyNote": "Abrir una publicación solo es posible como administrador."
   },
   "idea": {
     "title": "Idea del proyecto",
     "back": "Volver al inicio",
     "para1": "La plataforma Auroville de Soluciones y Problemas está dedicada al cambio positivo.",
     "para2": "La plataforma fomenta una cultura de responsabilidad y creatividad.",
-    "para3": "El enfoque siempre está más en las soluciones que en los problemas."
+    "para3": "El enfoque siempre está más en las soluciones que en los problemas.",
+    "feedbackSectionTitle": "Comentarios",
+    "feedbackIntro": "Comparte tu opinión sobre el proyecto. Opcionalmente deja tu correo si deseas una respuesta.",
+    "feedbackLabel": "Tu comentario",
+    "feedbackPlaceholder": "Escribe tu mensaje aquí…",
+    "emailOptional": "Correo (opcional)",
+    "submitFeedback": "Enviar comentario",
+    "submittingFeedback": "Enviando…",
+    "feedbackSuccess": "¡Gracias por tu comentario!",
+    "feedbackError": "No se pudo enviar el comentario."
   },
   "auth": {
     "adminLogin": "Inicio de sesión Admin",
@@ -195,6 +216,8 @@
     "solution": "Solución",
     "hidden": "Oculto",
     "noPosts": "Aún no hay posts.",
+    "recentItems": "Publicaciones recientes",
+    "reviewed": "Revisado",
     "signOutSection": "Cerrar sesión",
     "logout": "Cerrar sesión",
     "addAdminSection": "Añadir nuevo admin",
@@ -204,7 +227,20 @@
     "addError": "Error al añadir.",
     "genericError": "Ha ocurrido un error.",
     "emailPlaceholder": "admin@example.com",
-    "passwordPlaceholder": "Al menos 6 caracteres"
+    "passwordPlaceholder": "Al menos 6 caracteres",
+    "feedbackSection": "Comentarios",
+    "noFeedback": "Aún no hay comentarios.",
+    "loadMorePosts": "Cargar 10 más",
+    "feedbackPrev": "Anterior",
+    "feedbackNext": "Siguiente",
+    "feedbackPageIndicator": "Página {current} de {total}",
+    "feedbackRangeIndicator": "{start}–{end} de {total}",
+    "feedbackBigPrev": "Más recientes",
+    "feedbackBigNext": "Más antiguos",
+    "feedbackBigPrevAria": "Un comentario hacia los más nuevos",
+    "feedbackBigNextAria": "Un comentario hacia los más antiguos",
+    "feedbackAllVisibleHint": "Aquí se muestran todos los comentarios. Las flechas permiten desplazarse cuando hay más de cinco.",
+    "postsAllVisibleHint": "Aquí se listan todas las publicaciones recientes. Las flechas permiten desplazarse cuando hay más de cinco."
   },
   "dialoge": { "title": "Unirse al diálogo" },
   "common": {
